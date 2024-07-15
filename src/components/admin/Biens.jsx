@@ -47,10 +47,11 @@ export default function Biens(props) {
   return (<>
     <div className="tab-container">
       <div className="row header">
-        <div className="cell slim120">Type</div>
-        <div className="cell slim70">Surface</div>
+        <div className="cell slim120">Propriétaire</div>
+        <div className="cell slim90">Type</div>
         <div className="cell">Bien</div>
-        <div className="cell slim70">Prix</div>
+        <div className="cell slim70">Surface</div>
+        <div className="cell slim60">Prix</div>
         <div className="cell slim50">B-Sus</div>
         <div className="cell slim">Sus</div>
         <div className="cell slim">Val</div>
@@ -59,10 +60,11 @@ export default function Biens(props) {
         biens.map((bien) => 
           <>
             <div className="row">
-              <div className="cell slim120">{bien.type}</div>
-              <div className="cell slim70">{bien.surface}</div>
+              <div className="cell slim120">{bien.bailleur.nom}</div>
+              <div className="cell slim90">{bien.type}</div>
               <div className="cell">{bien.description}</div>
-              <div className="cell slim70">{bien.prix} {bien.currency}</div>
+              <div className="cell slim70">{bien.surface}</div>
+              <div className="cell slim60">{bien.prix} €</div>
               <div className="cell slim50"><input id={`${bien.id}_b_val`} data-bienid={bien.id} type="checkbox" defaultChecked={bien.date_suspension_bailleur !== null} title={bien.date_suspension_bailleur?.slice(0, 16).replace('T', ' ')} disabled/></div>
               <div className="cell slim"><input id={`${bien.id}_sus`} data-bienid={bien.id} type="checkbox" defaultChecked={bien.date_suspension !== null} onChange={suspension} title={bien.date_suspension?.slice(0, 16).replace('T', ' ')} style={{display: bien.date_validation === null ? "none" : "initial"}}/></div>
               <div className="cell slim"><input id={`${bien.id}_val`} data-bienid={bien.id} type="checkbox" defaultChecked={bien.date_validation !== null} onChange={validation} title={bien.date_validation?.slice(0, 16).replace('T', ' ')} disabled={bien.date_validation !== null}/></div>

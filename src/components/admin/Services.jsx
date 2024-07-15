@@ -6,6 +6,7 @@ import prestataireService from '../../services/prestataire';
 
 export default function Services(props) {
 
+  const [anglet, setAnglet] = React.useState(1);
   const [services, setServices] = React.useState([]);
   const [prestataires, setPrestataires] = React.useState([]);
 
@@ -23,21 +24,47 @@ export default function Services(props) {
     });
   }
 
+  const getCurrentPrestation = (service) => {
+    if(
+      service.prestations[0] && 
+      service.prestations[0].date_suppression_admin == null &&
+      service.prestations[0].date_suppression_voyageur == null &&
+      service.prestations[0].date_suppression_prestataire == null
+    ) {
+      return service.prestations[0];
+    }
+
+    return {};
+  }
+
+  const tabClick = (event) => {
+    const tab = event.currentTarget.dataset.tab;
+    setAnglet(tab);
+  }
+
   return (<>
+    <div className="tableur">
+      <div className={`tab${anglet==1?" selected":""}`} data-tab="1" onClick={tabClick}>Nouvelles</div>
+      <div className={`tab${anglet==2?" selected":""}`} data-tab="2" onClick={tabClick}>En-cours</div>
+      <div className={`tab${anglet==3?" selected":""}`} data-tab="3" onClick={tabClick}>Terminées</div>
+    </div>
     <div className="tab-container">
       <div className="row header">
         <div className="cell">Voyageur</div>
         <div className="cell">service</div>
+        <div className="cell slim120">Date</div>
         <div className="cell slim80">Note</div>
         <div className="cell">Prestataire</div>
-        <div className="cell slim120">Date</div>
       </div>
       {
-        services.map((service) => 
-          <>
+        services.map((service) => {
+          const prestation = getCurrentPrestation(service);
+
+          return <>
             <div className={"row service_"+service.id+""}>
               <div className="cell">{service.voyageur.nom}</div>
-              <div className="cell">{service.service.label}</div>
+              <div className="cell">{service.label}</div>
+              <div className="cell slim120">{service.date?.slice(0, 16).replace('T', ' ')}</div>
               <div className="cell slim80">
                 <div style={{display: service.prestataire ? 'inline': 'none'}} data-serviceid={service.id}>
                 {
@@ -47,30 +74,25 @@ export default function Services(props) {
               </div>
               <div className="cell">
                 <select onChange={changePrestataire} data-serviceid={service.id} className={service.prestataire ? "assigned":""}>
-                  {
-                    service.prestataire ? <>
-                      <option key="null" value="null">
-                        {service.prestataire.nom}
-                      </option>
-                    </>
-                    : <>
-                      <option key="null" value="null">
+                  {                    
+                    <>
+                      <option key="0" value="0">
                         Selection du prestataire
                       </option>
                       {prestataires.map(({ id, nom }) => (
-                        <option key={id} value={id}>
+                        <option key={id} value={id} selected={id == prestation.id_prestataire}>
                           {nom}
                         </option>
-                      ))}                    
+                      ))}
                     </>
                   }
                 </select>
               </div>
-              <div className="cell slim120">{service.date_service?.slice(0, 16).replace('T', ' ')}</div>
             </div>
           </>
+          }
         )
       }
-    </div>
-  </>)
+      </div>
+      </>)
 }

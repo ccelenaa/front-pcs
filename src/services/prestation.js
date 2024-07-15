@@ -42,22 +42,6 @@ export default {
         });
     },
 
-    setPrestataire: (id, id_prestataire) => {
-        return axios({
-            method: 'post',
-            url: `${API_URL}/prestations/${id}/set/prestataire`,
-            responseType: 'json',
-            withCredentials: true,
-            data: {
-                id_prestataire
-            }
-        }).then((response) => response.status === 200 ? response.data : {})
-        .catch(function (error) {
-            console.log({error})
-            return null;
-        });
-    },
-
     setNote: (id,note) => {
         return axios({
             method: 'post',
