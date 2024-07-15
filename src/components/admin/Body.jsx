@@ -8,7 +8,8 @@ import Bien from './Bien';
 import Biens from './Biens';
 import Compte from './Compte';
 import Login from 'components/login/Login';
-import Prestations from './Prestations';
+import Service from './Service';
+import Services from './Services';
 import Bailleur from './Bailleur';
 import Bailleurs from './Bailleurs';
 import Prestataire from './Prestataire';
@@ -28,7 +29,8 @@ export default function Body(props) {
     <Route path='/messages' render={(prps) => <Messages {...props}/>}/>
     <Route path='/biens' exact render={(prps) => <Biens {...props}/>}/>
     <Route path='/biens/:id' render={(prps) => <Bien {...props}/>}/>
-    <Route path='/prestations' render={(prps) => <Prestations {...props}/>}/>
+    <Route path='/services' render={(prps) => <Services {...props}/>}/>
+    <Route path='/services/:id' render={(prps) => <Service {...props}/>}/>
     <Route path='/bailleurs' exact render={(prps) => <Bailleurs {...props}/>}/>
     <Route path='/bailleurs/:id' render={(prps) => <Bailleur {...props}/>}/>
     <Route path='/prestataires' exact render={(prps) => <Prestataires {...props}/>}/>

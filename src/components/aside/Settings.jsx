@@ -49,8 +49,8 @@ export default function AsideSetting(props) {
             label: 'side.admin.biens',
             icon: all.faHomeLg
           },{
-            menu: '/prestations',
-            label: 'side.admin.prestations',
+            menu: '/services',
+            label: 'side.admin.services',
             icon: all.faHandshakeAngle
           },{
             menu: '/bailleurs',

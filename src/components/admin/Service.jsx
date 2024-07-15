@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import prestationService from '../../services/prestation';
 import prestataireService from '../../services/prestataire';
 
-export default function Prestations(props) {
+export default function Service(props) {
 
   const [prestations, setPrestations] = React.useState([]);
   const [prestataires, setPrestataires] = React.useState([]);
