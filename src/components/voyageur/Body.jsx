@@ -16,14 +16,14 @@ export default function Body(props) {
   return (<>
     <Switch>
       <Route path='/auth' render={(prps) => <Login {...props}/>}/>
-      <Route path='/inscription' render={(prps) => <Login {...props}/>}/>
-      <Route path='/compte' render={(prps) => <Compte {...props}/>}/>
+      <Route path='/inscription' exact render={(prps) => <Login {...props}/>}/>
+      <Route path='/compte' exact render={(prps) => <Compte {...props}/>}/>
       <Route path='/biens' exact render={(prps) => <Biens {...props}/>}/>
       <Route path='/biens/:id' exact render={(prps) => <Bien {...props}/>}/>
       <Route path='/locations' render={(prps) => <Locations {...props}/>}/>
-      <Route path='/services' render={(prps) => <Services {...props}/>}/>
-      <Route path='/services/ajout' render={(prps) => <AjoutService {...props}/>}/>
-      <Route path='/paiements' render={(prps) => <Paiements {...props}/>}/>
+      <Route path='/services' exact render={(prps) => <Services {...props}/>}/>
+      <Route path='/services/ajout' exact render={(prps) => <AjoutService {...props}/>}/>
+      <Route path='/paiements' exact render={(prps) => <Paiements {...props}/>}/>
     </Switch>
   </>)
 }

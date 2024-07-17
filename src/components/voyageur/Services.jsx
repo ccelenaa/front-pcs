@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import * as all from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import prestationService from '../../services/prestation';
+import { NavLink } from 'react-router-dom';
 
 export default function Services(props) {
 
@@ -53,6 +54,9 @@ export default function Services(props) {
   }
 
   return (<>
+    <NavLink to="/services/ajout" className="">Nouvelle demande de service</NavLink>
+    <br/>
+    <br/>
     <div className="tab-container">
       <div className="row header">
         <div className="cell">Prestation</div>

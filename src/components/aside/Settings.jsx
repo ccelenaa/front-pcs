@@ -141,8 +141,8 @@ export default function AsideSetting(props) {
             label: 'Mes locations',
             icon: all.faHomeLg
           },{
-            menu: '/prestations',
-            label: 'Demande de prestations',
+            menu: '/services',
+            label: 'Services',
             icon: all.faHandshakeAngle
           },{
             menu: '/paiements',
