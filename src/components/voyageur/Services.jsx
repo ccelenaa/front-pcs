@@ -3,7 +3,7 @@ import * as all from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import prestationService from '../../services/prestation';
 
-export default function Prestations(props) {
+export default function Services(props) {
 
   const [prestations, setPrestations] = React.useState([]);
 
