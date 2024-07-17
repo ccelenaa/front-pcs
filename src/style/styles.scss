@@ -415,21 +415,26 @@ div {
   margin-bottom: 20px;
   line-height: 35px;
   .tab {
+    margin: 10px 5px;
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: auto;
     text-align: center;
-    border-bottom: 4px solid transparent;
+    // border-bottom: 4px solid transparent;
+    border-radius: 6px;
     cursor: pointer;
 
     &:hover {
-      border-bottom: 4px solid rgba(0, 0, 0, .07);
+      // border-bottom: 4px solid rgba(0, 0, 0, .07);
+      background-color: rgba(20, 30, 60, .05);
     }
 
     &.selected {
-      border-bottom: 4px solid rgba(20, 30, 60, .2);
+      // border-bottom: 4px solid rgba(20, 30, 60, .2);
+      background-color: rgba(20, 30, 60, .08);
       &:hover {
-        border-bottom: 4px solid rgba(20, 30, 60, .2);
+      background-color: rgba(20, 30, 60, .08);
+      // border-bottom: 4px solid rgba(20, 30, 60, .2);
       }
     }
   }
