@@ -10,18 +10,20 @@ export default function Services(props) {
   const [services, setServices] = React.useState([]);
   const [prestataires, setPrestataires] = React.useState([]);
 
-  React.useEffect(async () => {
+  const getData = async () => {
     setServices(await serviceService.gets());
     setPrestataires(await prestataireService.gets());
+  }
+
+  React.useEffect(async () => {
+    await getData();
   },[]);
 
   const changePrestataire = (event) => {
     const service_id = event.currentTarget.dataset.serviceid;
     const prestataire_id = event.currentTarget.value;
 
-    serviceService.setPrestataire(service_id, prestataire_id).then((u) => {
-      setServices(services.map(p => p.id == u.id ? u : p));
-    });
+    serviceService.setPrestataire(service_id, prestataire_id).then(async () => await getData());
   }
 
   const getCurrentPrestation = (service) => {
@@ -52,19 +54,21 @@ export default function Services(props) {
     {anglet == 1 ? <>
     <div className="tab-container">
       <div className="row header">
-        <div className="cell">Voyageur1</div>
+        <div className="cell">Voyageur</div>
         <div className="cell">service</div>
+        <div className="cell slim50">Max</div>
         <div className="cell slim120">Date</div>
         <div className="cell">Prestataire</div>
       </div>
       {
-        services.map((service) => {
+        services.filter(s=>s.statut==0).map((service) => {
           const prestation = getCurrentPrestation(service);
 
           return <>
             <div className={"row service_"+service.id+""}>
               <div className="cell">{service.voyageur.nom}</div>
               <div className="cell">{service.label}</div>
+              <div className="cell slim50">{service.prix_max} €</div>
               <div className="cell slim120">{service.date?.slice(0, 16).replace('T', ' ')}</div>
               <div className="cell">
                 <select onChange={changePrestataire} data-serviceid={service.id} className={service.prestataire ? "assigned":""}>
@@ -93,19 +97,27 @@ export default function Services(props) {
       (anglet == 2 ? <>
         <div className="tab-container">
           <div className="row header">
-            <div className="cell">Voyageur2</div>
+            <div className="cell">Voyageur</div>
             <div className="cell">service</div>
+            <div className="cell slim50">Max</div>
+            <div className="cell slim50">Prix</div>
+            <div className="cell slim50">pay</div>
             <div className="cell slim120">Date</div>
             <div className="cell">Prestataire</div>
           </div>
           {
-            services.map((service) => {
+            services.filter(s=>s.statut>0 && s.statut<10).map((service) => {
               const prestation = getCurrentPrestation(service);
+              const prix = prestation.prix_pretataire ? `${prestation.prix_pretataire} €` : <FontAwesomeIcon icon={all.faClockRotateLeft} className="burger" style={{}}/>;
+              const pay = prestation.statut == 3 ? <FontAwesomeIcon icon={all.faCreditCard} className="burger" style={{color: "green"}}/> : <FontAwesomeIcon icon={all.faClockRotateLeft} className="burger" style={{}}/>;
 
               return <>
                 <div className={"row service_"+service.id+""}>
                   <div className="cell">{service.voyageur.nom}</div>
                   <div className="cell">{service.label}</div>
+                  <div className="cell slim50">{service.prix_max} €</div>
+                  <div className="cell slim50">{prix}</div>
+                  <div className="cell slim50">{pay}</div>
                   <div className="cell slim120">{service.date?.slice(0, 16).replace('T', ' ')}</div>
                   <div className="cell">
                     <select onChange={changePrestataire} data-serviceid={service.id} className={service.prestataire ? "assigned":""}>
@@ -132,47 +144,60 @@ export default function Services(props) {
         </>:
 
         <>
-          <div className="tab-container">
-            <div className="row header">
-              <div className="cell">Voyageur3</div>
-              <div className="cell">service</div>
-              <div className="cell slim120">Date</div>
-              <div className="cell slim80">Note</div>
-              <div className="cell">Prestataire</div>
-            </div>
-            {
-              services.map((service) => {
-                const prestation = getCurrentPrestation(service);
+        <div className="tab-container">
+          <div className="row header">
+            <div className="cell">Voyageur</div>
+            <div className="cell">service</div>
+            <div className="cell slim50">Max</div>
+            <div className="cell slim50">Prix</div>
+            <div className="cell slim50">pay</div>
+            <div className="cell slim80">Note</div>
+            <div className="cell slim120">Date</div>
+            <div className="cell">Prestataire</div>
+          </div>
+          {
+            services.filter(s=>s.statut==10).map((service) => {
+              const prestation = getCurrentPrestation(service);
+              const prix = prestation.prix_pretataire ? `${prestation.prix_pretataire} €` : <FontAwesomeIcon icon={all.faClockRotateLeft} className="burger" style={{}}/>;
+              const pay = prestation.statut == 3 ? <FontAwesomeIcon icon={all.faCreditCard} className="burger" style={{color: "green"}}/> : <FontAwesomeIcon icon={all.faClockRotateLeft} className="burger" style={{}}/>;
 
-                return <>
-                  <div className={"row service_"+service.id+""}>
-                    <div className="cell">{service.voyageur.nom}</div>
-                    <div className="cell">{service.label}</div>
-                    <div className="cell slim120">{service.date?.slice(0, 16).replace('T', ' ')}</div>
-                    <div className="cell slim80">
-                      <div style={{display: prestation ? 'inline': 'none'}} data-serviceid={service.id}>
-                      {
-                        [1,2,3,4,5].map(i => <FontAwesomeIcon icon={all.faStar} className={"Star Star"+i+ (prestation.note && i<=prestation.note ? " level-"+service.note:"")} data-serviceid={service.id} data-level={i}/>)
-                      }
-                      </div>
-                    </div>
-                    <div className="cell">
-                      <select data-serviceid={service.id} className={prestation ? "assigned":""}>
-                        {                    
-                          <>
-                            <option key="0" value="0">
-                              {prestataires.find(p=>p.id==prestation.id_prestataire).nom}
-                            </option>
-                          </>
-                        }
-                      </select>
+              return <>
+                <div className={"row service_"+service.id+""}>
+                  <div className="cell">{service.voyageur.nom}</div>
+                  <div className="cell">{service.label}</div>
+                  <div className="cell slim50">{service.prix_max} €</div>
+                  <div className="cell slim50">{prix}</div>
+                  <div className="cell slim50">{pay}</div>
+                  <div className="cell slim80">
+                    <div style={{display: prestation ? 'inline': 'none'}} data-serviceid={service.id}>
+                    {
+                      [1,2,3,4,5].map(i => <FontAwesomeIcon icon={all.faStar} className={"Star Star"+i+ (prestation.note && i<=prestation.note ? " level-"+service.note:"")} data-serviceid={service.id} data-level={i}/>)
+                    }
                     </div>
                   </div>
-                </>
-                }
-              )
-            }
-            </div>
+                  <div className="cell slim120">{service.date?.slice(0, 16).replace('T', ' ')}</div>
+                  <div className="cell">
+                    <select onChange={changePrestataire} data-serviceid={service.id} className={service.prestataire ? "assigned":""}>
+                      {                    
+                        <>
+                          <option key="0" value="0">
+                            Selection du prestataire
+                          </option>
+                          {prestataires.map(({ id, nom }) => (
+                            <option key={id} value={id} selected={id == prestation.id_prestataire}>
+                              {nom}
+                            </option>
+                          ))}
+                        </>
+                      }
+                    </select>
+                  </div>
+                </div>
+              </>
+              }
+            )
+          }
+          </div>
         </>
       )}
       </>)
