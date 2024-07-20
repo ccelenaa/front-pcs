@@ -82,16 +82,12 @@ export default function Services(props) {
 
 return (<>
   <div className="tableur">
-    <div className={`tab${anglet==1?" selected":""}`} data-tab="1" onClick={tabClick} style={{display: "flex", flexDirection: "row"}}>
-      <div style={{flexGrow: 0, flexShrink: 0}}>
-        <NavLink to="/services/ajout" className="" style={{padding: "0px 10px"}}>
-          <FontAwesomeIcon icon={all.faAdd} className="burger" style={{}}/>
-        </NavLink>
-      </div>
-      <div style={{flexGrow: 1, flexShrink: 1}}>
-        Nouvelles
-      </div>
+    <div className='tab ajout'>
+      <NavLink to="/services/ajout" className="" style={{borderRadius: "50px", padding: "4px 10px", height: "100%"}}>
+        <FontAwesomeIcon icon={all.faAdd} />
+      </NavLink>
     </div>
+    <div className={`tab${anglet==1?" selected":""}`} data-tab="1" onClick={tabClick}>Nouvelles</div>
     <div className={`tab${anglet==2?" selected":""}`} data-tab="2" onClick={tabClick}>En-cours</div>
     <div className={`tab${anglet==3?" selected":""}`} data-tab="3" onClick={tabClick}>Terminées</div>
   </div>

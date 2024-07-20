@@ -421,7 +421,7 @@ div {
     flex-basis: auto;
     text-align: center;
     // border-bottom: 4px solid transparent;
-    border-radius: 6px;
+    border-radius: 50px;
     cursor: pointer;
 
     &:hover {
@@ -435,6 +435,18 @@ div {
       &:hover {
       background-color: rgba(20, 30, 60, .08);
       // border-bottom: 4px solid rgba(20, 30, 60, .2);
+      }
+    }
+
+    &.ajout {
+      flex-grow: 0;
+      flex-shrink: 0;
+      background-color: rgba(120, 210, 100, .6);
+      &:hover {
+        background-color: rgba(120, 210, 100, .8);
+      }
+      a {
+        color: white !important;
       }
     }
   }
