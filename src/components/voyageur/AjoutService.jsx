@@ -62,6 +62,10 @@ export default function AjoutService(props) {
   <div className="page-title" style={{textAlign:"center"}}>
     Nouvelle demande de service
   </div>
+    <img
+      src="/public/images/IPSEC_GRE-1721471918169.png"
+      style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+    />
     <form class="formulaire">
       <div>
         <label>Titre du service</label>
