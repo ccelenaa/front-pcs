@@ -45,6 +45,23 @@ export default {
         });
     },
 
+    getVoyageurServices: (id_voyageur) => {
+        if([undefined, null].includes(id_voyageur)){
+            return [];
+        }
+
+        return axios({
+            method: 'get',
+            url: `${API_URL}/services/voyageur/${id_voyageur}?cache=${Math.random()}`,
+            responseType: 'json',
+            withCredentials: true,
+        }).then((response)=> response.status === 200 ? response.data : [])
+        .catch(function (error) {
+            console.log({error})
+            return [];
+        });
+    },
+
     setPrestataire: (id, id_prestataire) => {
         return axios({
             method: 'post',

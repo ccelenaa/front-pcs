@@ -9,41 +9,94 @@ import * as all from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function AjoutService(props) {
-  var [isAuth, setAuth] = useState('load');
-  var [userData, setUserData] = useState(null);
-  const history = useHistory();
+  const [images, setImages] = useState([]);
+  const [previewUrls, setPreviewUrls] = useState([]);
 
-  const close = (event) => {
-    logout();
-  }
-  
-  const account = props.account ?? {};
+  const handleImageChange = (event) => {
+    const files = Array.from(event.target.files);
+    const newImages = [...images, ...files];
+    const newPreviewUrls = [...previewUrls, ...files.map(file => URL.createObjectURL(file))];
+
+    setImages(newImages);
+    setPreviewUrls(newPreviewUrls);
+  };
+
+  const handleRemoveImage = (index) => {
+    const updatedImages = images.filter((_, i) => i !== index);
+    const updatedPreviewUrls = previewUrls.filter((_, i) => i !== index);
+
+    setImages(updatedImages);
+    setPreviewUrls(updatedPreviewUrls);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(images);
+  };
 
   return (<>
     <form class="formulaire">
       <div>
-        <label>Type du bien</label>
-        <select style={{width: "100%"}}>
-          <option>Sellection du type</option>
-          <option>Appartement</option>
-          <option>Studio</option>
-        </select>
+        <label>Titre du service</label>
+        <input name="titre" type="text" value=""  placeholder=""/>
       </div>
       <div>
-        <label>Nom</label>
-        <input type="text" value={account.nom} />
+        <label>Description</label>
+        <textarea name="description" type="text" style={{width: "100%", height: "170px"}} value="" placeholder="Details de la préstation"/>
       </div>
       <div>
-        <label for="">Telephone</label>
-        <input type="text" value={account.telephone} />
+        <label for="">Adresse</label>
+        <input  name="titre" type="text" placeholder="Lieu de la prestation"/>
       </div>
       <div>
-        <label>Email</label>
-        <input type="text" value={account.email} disabled/>
+        <label>Contact</label>
+        <input name="titre" type="text" value="" placeholder="Tel / Email"/>
       </div>
       <div>
-        <label>Login</label>
-        <input type="text" value={account.login} disabled/>
+        <label htmlFor="file-upload" style={{cursor: "pointer", display: 'block', marginBottom: '20px' }}>
+          Images <FontAwesomeIcon icon={all.faAdd} style={{cursor: "pointer", fontSize: '17px', color: 'rgba(100,110,160,0.8)', marginTop: "15px"}}/>
+        </label>
+        <input
+          id="file-upload"
+          name="images"
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleImageChange}
+          style={{ display: 'none' }}
+        />
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+          {previewUrls.map((url, index) => (
+            <div key={index} style={{ position: 'relative', marginRight: '10px', marginBottom: '10px' }}>
+              <img
+                src={url}
+                alt={`Preview ${index}`}
+                style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+              />
+              <button
+                type="button"
+                onClick={() => handleRemoveImage(index)}
+                style={{
+                  position: 'absolute',
+                  top: '0',
+                  right: '0',
+                  backgroundColor: 'red',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '50%',
+                  width: '20px',
+                  height: '20px',
+                  textAlign: 'center',
+                  lineHeight: '20px',
+                  cursor: 'pointer'
+                }}
+              >
+                &times;
+              </button>
+            </div>
+          ))}
+        </div>
+  
       </div>
       <div>
         <input type="submit" value="Sauvegarder" />
