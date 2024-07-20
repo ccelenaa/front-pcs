@@ -7,6 +7,7 @@ import { useHistory, Link, NavLink } from 'react-router-dom';
 import AsideSetting from '../aside/Settings';
 import * as all from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { notifier } from 'components/Notifications';
 
 export default function AjoutService(props) {
   const [images, setImages] = useState([]);
@@ -34,7 +35,7 @@ export default function AjoutService(props) {
 
     const formData = new FormData();
     images.forEach((image, index) => {
-      formData.append(`images[${index}]`, image);
+      formData.append(`images`, image);
     });
 
     const apiUrl = 'https://api.pcs.fr/services/ajout';
@@ -44,18 +45,16 @@ export default function AjoutService(props) {
         method: 'POST',
         body: formData
       });
-      console.log(response);
+
       if (response.ok) {
         const result = await response.json();
         console.log('Images uploaded successfully:', result);
-        // Handle successful upload (e.g., show a success message, reset the form, etc.)
+        notifier('success', `Demande crée avec succes`);
       } else {
         console.error('Failed to upload images');
-        // Handle failed upload (e.g., show an error message)
       }
     } catch (error) {
       console.error('Error uploading images:', error);
-      // Handle errors (e.g., show an error message)
     }
   };
 
