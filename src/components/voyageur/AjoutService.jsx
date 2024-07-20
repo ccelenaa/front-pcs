@@ -1,17 +1,14 @@
 
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { logout, setConnexion, isConnected } from '../../services/user';
-import { API_URL } from '../../Config';
-import { useHistory, Link, NavLink } from 'react-router-dom';
-import AsideSetting from '../aside/Settings';
 import * as all from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { notifier } from 'components/Notifications';
+import { useNavigate } from 'react-router-dom';
 
 export default function AjoutService(props) {
   const [images, setImages] = useState([]);
   const [previewUrls, setPreviewUrls] = useState([]);
+  const navigate = useNavigate();
 
   const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
@@ -48,8 +45,8 @@ export default function AjoutService(props) {
 
       if (response.ok) {
         const result = await response.json();
-        console.log('Images uploaded successfully:', result);
         notifier('success', `Demande crée avec succes`);
+        navigate('/services');
       } else {
         console.error('Failed to upload images');
       }
@@ -62,18 +59,18 @@ export default function AjoutService(props) {
   <div className="page-title" style={{textAlign:"center"}}>
     Nouvelle demande de service
   </div>
-    <img
+    {/* <img
       src="/public/images/IPSEC_GRE-1721471918169.png"
       style={{ width: '100px', height: '100px', objectFit: 'cover' }}
-    />
+    /> */}
     <form class="formulaire">
       <div>
         <label>Titre du service</label>
-        <input name="titre" type="text" value=""  placeholder="Titre"/>
+        <input name="titre" type="text" placeholder="Titre"/>
       </div>
       <div>
         <label>Description</label>
-        <textarea name="description" type="text" style={{width: "100%", height: "170px"}} value="" placeholder="Details de la préstation"/>
+        <textarea name="description" type="text" style={{width: "100%", height: "170px"}} placeholder="Details de la préstation"/>
       </div>
       <div>
         <label for="">Adresse</label>
@@ -81,7 +78,7 @@ export default function AjoutService(props) {
       </div>
       <div>
         <label>Contact</label>
-        <input name="titre" type="text" value="" placeholder="Tel / Email"/>
+        <input name="titre" type="text" placeholder="Tel / Email"/>
       </div>
       <div>
         <label htmlFor="file-upload" style={{cursor: "pointer", display: 'block', marginBottom: '20px' }}>

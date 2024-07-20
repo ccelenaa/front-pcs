@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { setConnexion, isConnected } from './../../services/user';
 import { API_URL } from './../../Config';
-import { useHistory, Link, NavLink, Route, useLocation } from 'react-router-dom';
+import { Link, NavLink, Route, Routes, BrowserRouter as Router, useLocation } from 'react-router-dom';
 import Planing from './Planing';
 import Factures from './Factures';
 import Services from './Services';
@@ -16,13 +16,15 @@ import Prestataire from 'components/admin/Prestataire';
 export default function Body(props) {
 console.log({Prestataire: props})
   return (<>
-    <Route path='/auth' render={(prps) => <Login {...props}/>}/>
-    <Route path='/inscription' render={(prps) => <Login {...props}/>}/>
-    <Route path='/compte' render={(prps) => <Compte {...props}/>}/>
-    <Route path='/messages' render={(prps) => <Messages {...props}/>}/>
-    <Route path='/services' render={(prps) => <Services {...props}/>}/>
-    <Route path='/prestations' render={(prps) => <Prestations {...props}/>}/>
-    <Route path='/planing' render={(prps) => <Planing {...props}/>}/>
-    <Route path='/factures' render={(prps) => <Factures {...props}/>}/>
+    <Routes>
+    <Route path='/auth' element={<Login {...props}/>}/>
+    <Route path='/inscription' element={<Login {...props}/>}/>
+    <Route path='/compte' element={<Compte {...props}/>}/>
+    <Route path='/messages' element={<Messages {...props}/>}/>
+    <Route path='/services' element={<Services {...props}/>}/>
+    <Route path='/prestations' element={<Prestations {...props}/>}/>
+    <Route path='/planing' element={<Planing {...props}/>}/>
+    <Route path='/factures' element={<Factures {...props}/>}/>
+    </Routes>
   </>)
 }

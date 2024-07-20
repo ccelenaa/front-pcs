@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory, BrowserRouter as Router, Route, useParams, NavLink } from 'react-router-dom';
+import { Link, BrowserRouter as Router, Route, useParams, NavLink } from 'react-router-dom';
 import {
   faUniversity,
   faDove,
@@ -39,7 +39,6 @@ import { logout, setConnexion } from 'services/user';
 
 export default function AsideSSetting(props) {
   const { menu: selected } = useParams();
-  const history = useHistory();
   useEffect(() => {
 
   }, []);

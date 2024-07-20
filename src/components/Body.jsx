@@ -2,19 +2,18 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { setConnexion, isConnected } from '../services/user';
 import { API_URL } from '../Config';
-import { useHistory, Link, NavLink, Route, useLocation } from 'react-router-dom';
+import { useNavigate, Navigate, Link, NavLink, Route, useLocation } from 'react-router-dom';
 import AsideSetting from './aside/Settings';
-import { Redirect, useParams } from 'react-router-dom/cjs/react-router-dom';
-import Voyageur from 'components/voyageur/Body';
-import Bailleur from 'components/bailleur/Body';
-import Prestataire from 'components/prestataire/Body';
-import Admin from 'components/admin/Body';
+import Voyageur from './voyageur/Body';
+import Bailleur from './bailleur/Body';
+import Prestataire from './prestataire/Body';
+import Admin from './admin/Body';
 
 export default function Body(props) {
+  const navigate = useNavigate();
 
   var [isAuth, setAuth] = useState('load');
   var [userData, setUserData] = useState(null);
-  const history = useHistory();
   // const {menu: selected} = useParams();
   const {pathname: selected = ""} = useLocation();
 
@@ -57,7 +56,7 @@ export default function Body(props) {
             setConnexion(true);
             setAuth('true');
             setUserData(res.data);
-            history.push("/");
+            navigate("/");
           }
         })
       }
@@ -77,11 +76,11 @@ export default function Body(props) {
   }
 
   if(isAuth === 'false' && selected !== '/auth' && selected !== '/inscription') {
-    return <Redirect to="/auth"/>;
+    return <Navigate to="/auth"/>;
   }
 
   if(isAuth === 'true' && (selected === '/auth' || selected === '/inscription' || selected === '/')) {
-    return <Redirect to="/compte"/>;
+    return <Navigate to="/compte"/>;
   }
 
   return (<>

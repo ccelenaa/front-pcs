@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { setConnexion, isConnected } from './../../services/user';
 import { API_URL } from './../../Config';
-import { useHistory, Link, NavLink, Route, useLocation, Switch } from 'react-router-dom';
+import { Link, NavLink, Route, Routes, BrowserRouter as Router, useLocation, Switch } from 'react-router-dom';
 import Biens from './Biens';
 import Prestation from './Prestation';
 import Facture from './Facture';
@@ -15,15 +15,15 @@ import AjoutBien from './AjoutBien';
 export default function Body(props) {
 
   return (<>
-  <Switch>
-    <Route path='/auth' render={(prps) => <Login {...props}/>}/>
-    <Route path='/inscription' render={(prps) => <Login {...props}/>}/>
-    <Route path='/compte' render={(prps) => <Compte {...props}/>}/>
-    <Route path='/messages' exact render={(prps) => <Message {...props}/>}/>
-    <Route path='/biens' exact render={(prps) => <Biens {...props}/>}/>
-    <Route path='/biens/ajout' exact render={(prps) => <AjoutBien {...props}/>}/>
-    <Route path='/prestations' render={(prps) => <Prestation {...props}/>}/>
-    <Route path='/factures' render={(prps) => <Facture {...props}/>}/>
-  </Switch>
+  <Routes>
+    <Route path='/auth' element={<Login {...props}/>}/>
+    <Route path='/inscription' element={<Login {...props}/>}/>
+    <Route path='/compte' element={<Compte {...props}/>}/>
+    <Route path='/messages' exact element={<Message {...props}/>}/>
+    <Route path='/biens' exact element={<Biens {...props}/>}/>
+    <Route path='/biens/ajout' exact element={<AjoutBien {...props}/>}/>
+    <Route path='/prestations' element={<Prestation {...props}/>}/>
+    <Route path='/factures' element={<Facture {...props}/>}/>
+  </Routes>
   </>)
 }

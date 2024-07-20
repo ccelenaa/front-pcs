@@ -9,7 +9,7 @@ import {getUserData} from '../services/user';
 import langueService from '../services/langue';
 import { useTranslation } from "react-i18next";
 import Notifications, { notifier } from './Notifications';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Payment from 'services/payment';
 
 

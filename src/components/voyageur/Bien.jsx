@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import bienService from '../../services/bien';
 import Payment from 'services/payment';
-import { useParams } from 'react-router-dom/cjs/react-router-dom';
+import { useParams } from 'react-router-dom';
 
 export default function Biens(props) {
   const {id} = useParams();
