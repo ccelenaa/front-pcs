@@ -29,16 +29,44 @@ export default function AjoutService(props) {
     setPreviewUrls(updatedPreviewUrls);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(images);
+
+    const formData = new FormData();
+    images.forEach((image, index) => {
+      formData.append(`images[${index}]`, image);
+    });
+
+    const apiUrl = 'https://api.pcs.fr/services/ajout';
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        body: formData
+      });
+      console.log(response);
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Images uploaded successfully:', result);
+        // Handle successful upload (e.g., show a success message, reset the form, etc.)
+      } else {
+        console.error('Failed to upload images');
+        // Handle failed upload (e.g., show an error message)
+      }
+    } catch (error) {
+      console.error('Error uploading images:', error);
+      // Handle errors (e.g., show an error message)
+    }
   };
 
   return (<>
+  <div className="page-title" style={{textAlign:"center"}}>
+    Nouvelle demande de service
+  </div>
     <form class="formulaire">
       <div>
         <label>Titre du service</label>
-        <input name="titre" type="text" value=""  placeholder=""/>
+        <input name="titre" type="text" value=""  placeholder="Titre"/>
       </div>
       <div>
         <label>Description</label>
@@ -78,8 +106,8 @@ export default function AjoutService(props) {
                 onClick={() => handleRemoveImage(index)}
                 style={{
                   position: 'absolute',
-                  top: '0',
-                  right: '0',
+                  top: '-5px',
+                  right: '-5px',
                   backgroundColor: 'red',
                   color: 'white',
                   border: 'none',
@@ -91,15 +119,17 @@ export default function AjoutService(props) {
                   cursor: 'pointer'
                 }}
               >
-                &times;
+                X
               </button>
             </div>
           ))}
         </div>
   
       </div>
-      <div>
-        <input type="submit" value="Sauvegarder" />
+      <div style={{display: "flex", flexDirection: "row"}}>
+        <div>
+          <input type="submit" onClick={handleSubmit} value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Créer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"/>
+        </div>
       </div>
       <br/>
       <br/>
