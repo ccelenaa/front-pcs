@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_URL } from '../Config';
+import { notifier } from 'components/Notifications';
 
 export default {
     gets: () => {
@@ -78,4 +79,26 @@ export default {
         });
     },
 
+    addService: (formData) => {
+        return axios({
+            method: 'post',
+            url: `${API_URL}/services/ajout`,
+            responseType: 'json',
+            withCredentials: true,
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+            data: formData
+        }).then((response) => {
+            if(response.status >= 200 && response.status < 300) {
+                notifier('success', `Demande crée avec succes`);
+                return true;
+            }
+        }).catch(function (error) {
+            notifier('error', `Erreur d'ajout de service`);
+            console.log({error});
+            return false;
+        });
+
+    },
 }

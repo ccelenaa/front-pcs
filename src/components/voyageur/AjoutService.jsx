@@ -4,6 +4,7 @@ import * as all from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { notifier } from 'components/Notifications';
 import { useNavigate } from 'react-router-dom';
+import service from 'services/service';
 
 export default function AjoutService(props) {
   const [images, setImages] = useState([]);
@@ -35,23 +36,8 @@ export default function AjoutService(props) {
       formData.append(`images`, image);
     });
 
-    const apiUrl = 'https://api.pcs.fr/services/ajout';
-
-    try {
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        body: formData
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-        notifier('success', `Demande crée avec succes`);
-        navigate('/services');
-      } else {
-        console.error('Failed to upload images');
-      }
-    } catch (error) {
-      console.error('Error uploading images:', error);
+    if(await service.addService(formData)) {
+      navigate("/services");
     }
   };
 
