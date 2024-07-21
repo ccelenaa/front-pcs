@@ -28,6 +28,18 @@ export default {
         });
     },
 
+    getBailleur: () => {
+        return axios({
+            method: 'get',
+            url: `${API_URL}/biens/bailleurs/me?cache=${Math.random()}`,
+            responseType: 'json',
+            withCredentials: true,
+        }).catch(function (error) {
+            console.log({error});
+            return [];
+        });
+    },
+
     add: (formData) => {
         return axios({
             method: 'post',

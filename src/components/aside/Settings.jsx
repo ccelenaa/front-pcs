@@ -41,10 +41,6 @@ export default function AsideSetting(props) {
             label: 'side.admin.account',
             icon: faUser
           },{
-            menu: '/messages',
-            label: 'side.admin.messages',
-            icon: all.faComment
-          },{
             menu: '/biens',
             label: 'side.admin.biens',
             icon: all.faHomeLg

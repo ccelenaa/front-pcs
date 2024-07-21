@@ -2,6 +2,9 @@
 
 import React, { useEffect, useState } from 'react';
 import bienService from '../../services/bien';
+import { NavLink } from 'react-router-dom';
+import * as all from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Biens(props) {
 
@@ -52,17 +55,17 @@ export default function Biens(props) {
       {
         biens.map((bien) => 
           <>
-            <div className="row">
+            <NavLink to={`/biens/${bien.id}`} className={"row bien_"+bien.id+""}>
               <div className="cell slim120">{bien.bailleur.nom}</div>
               <div className="cell slim90">{bien.type}</div>
-              <div className="cell">{bien.description}</div>
+              <div className="cell">{bien.titre}</div>
               <div className="cell slim70">{bien.surface}</div>
               <div className="cell slim60">{bien.prix} €</div>
               <div className="cell slim50"><input id={`${bien.id}_b_val`} data-bienid={bien.id} type="checkbox" defaultChecked={bien.date_suspension_bailleur !== null} title={bien.date_suspension_bailleur?.slice(0, 16).replace('T', ' ')} disabled/></div>
               <div className="cell slim"><input id={`${bien.id}_sus`} data-bienid={bien.id} type="checkbox" defaultChecked={bien.date_suspension !== null} onChange={suspension} title={bien.date_suspension?.slice(0, 16).replace('T', ' ')} style={{display: bien.date_validation === null ? "none" : "initial"}}/></div>
               <div className="cell slim"><input id={`${bien.id}_val`} data-bienid={bien.id} type="checkbox" defaultChecked={bien.date_validation !== null} onChange={validation} title={bien.date_validation?.slice(0, 16).replace('T', ' ')} disabled={bien.date_validation !== null}/></div>
               {/* <div className="cell slim"><FontAwesomeIcon icon={all.faRemove} className="burger" style={{fontSize: '18px', cursor: 'pointer'}}/></div> */}
-            </div>
+            </NavLink>
           </>
         )
       }

@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { notifier } from 'components/Notifications';
 import { useNavigate } from 'react-router-dom';
 import serviceBien from 'services/bien';
+import { NavLink } from 'react-router-dom';
 
 export default function AjoutService(props) {
   const [images, setImages] = useState([]);
@@ -45,8 +46,15 @@ export default function AjoutService(props) {
   };
 
   return (<>
-  <div className="page-title">
-    Ajout d'un nouveau bien
+  <div className="tableur">
+    <div className='tab ajout'>
+      <NavLink to="/biens" className="" style={{borderRadius: "50px", padding: "4px 10px", height: "100%"}}>
+        <FontAwesomeIcon icon={all.faArrowLeft} />
+      </NavLink>
+    </div>
+    <div className="page-title" style={{flexGrow: 1, flexShrink: 1}}>
+      Ajout d'un nouveau bien
+    </div>
   </div>
     <form class="formulaire" id="service_form">
       <div>

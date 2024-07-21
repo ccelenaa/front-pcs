@@ -54,7 +54,7 @@ export default function Bailleurs(props) {
             <div className="row">
               <div className="cell">{bailleur.nom}</div>
               <div className="cell">{bailleur.date_creation.slice(0, 16).replace('T', ' ')}</div>
-              <div className="cell slim40">{bailleur.bien.length}</div>
+              <div className="cell slim40">{bailleur.biens?.length}</div>
               <div className="cell slim"><input id={`${bailleur.id}_val`} data-bailleurid={bailleur.id} type="checkbox" defaultChecked={bailleur.date_suspension !== null} onChange={suspenssion} title={bailleur.date_suspension?.slice(0, 16).replace('T', ' ')} style={{display: bailleur.date_validation === null ? "none" : "initial"}}/></div>
               <div className="cell slim"><input id={`${bailleur.id}_sus`} data-bailleurid={bailleur.id} type="checkbox" defaultChecked={bailleur.date_validation !== null} onChange={validation} title={bailleur.date_validation?.slice(0, 16).replace('T', ' ')} disabled={bailleur.date_validation !== null}/></div>
               {/* <div className="cell slim"><FontAwesomeIcon icon={all.faRemove} className="burger" style={{fontSize: '18px', cursor: 'pointer'}}/></div> */}
