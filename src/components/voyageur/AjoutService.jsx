@@ -31,13 +31,16 @@ export default function AjoutService(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const formData = new FormData();
+    const serviceForm = document.getElementById('service_form');
+    const formData = new FormData(serviceForm);
+  
+    formData.delete('images');
     images.forEach((image, index) => {
-      formData.append(`images`, image);
+      formData.append('images', image);
     });
-
+  
     if(await service.addService(formData)) {
-      navigate("/services");
+      // navigate("/services");
     }
   };
 
@@ -45,26 +48,30 @@ export default function AjoutService(props) {
   <div className="page-title" style={{textAlign:"center"}}>
     Nouvelle demande de service
   </div>
-    {/* <img
-      src="/public/images/IPSEC_GRE-1721471918169.png"
-      style={{ width: '100px', height: '100px', objectFit: 'cover' }}
-    /> */}
-    <form class="formulaire">
+    <form class="formulaire" id="service_form">
       <div>
         <label>Titre du service</label>
-        <input name="titre" type="text" placeholder="Titre"/>
+        <input name="label" type="text" placeholder="Titre"/>
       </div>
       <div>
         <label>Description</label>
         <textarea name="description" type="text" style={{width: "100%", height: "170px"}} placeholder="Details de la préstation"/>
       </div>
       <div>
+        <label for="">Prix max</label>
+        <input  name="prix_max" type="text"/>
+      </div>
+      <div>
+        <label>Date de prestation</label>
+        <input name="date" type="date"/>
+      </div>
+      <div>
         <label for="">Adresse</label>
-        <input  name="titre" type="text" placeholder="Lieu de la prestation"/>
+        <input  name="adresse" type="text" placeholder="Lieu de la prestation"/>
       </div>
       <div>
         <label>Contact</label>
-        <input name="titre" type="text" placeholder="Tel / Email"/>
+        <input name="contact" type="text" placeholder="Tel / Email"/>
       </div>
       <div>
         <label htmlFor="file-upload" style={{cursor: "pointer", display: 'block', marginBottom: '20px' }}>
