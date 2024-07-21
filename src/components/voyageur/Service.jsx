@@ -5,6 +5,8 @@ import { NavLink } from 'react-router-dom';
 import serviceService from '../../services/service';
 import Payment from 'services/payment';
 import { useParams } from 'react-router-dom';
+import * as all from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Service(props) {
   const {id} = useParams();
@@ -44,13 +46,19 @@ export default function Service(props) {
   const prestation = getCurrentPrestation(service);
 
   return (<>
-    <NavLink to="/services">Retour</NavLink>
+    <div className="tableur">
+      <div className='tab ajout'>
+        <NavLink to="/services" className="" style={{borderRadius: "50px", padding: "4px 10px", height: "100%"}}>
+          <FontAwesomeIcon icon={all.faArrowLeft} />
+        </NavLink>
+      </div>
+    </div>
     <div className="tab-container">
       <div className="row">
         <div className="cell slim120">Titre</div>
         <div className="cell">{service.label}</div>
       </div>
-      <div className="row">
+      <div className="row" style={{height: "100px"}}>
         <div className="cell slim120">Description</div>
         <div className="cell">{service.description}</div>
       </div>
@@ -73,7 +81,7 @@ export default function Service(props) {
         </> :
         <></>
       }
-      <div className="row">
+      <div className="row" style={{paddingBottom: "50px"}}>
         <div className="cell slim120">Date</div>
         <div className="cell">{service.date}</div>
       </div>

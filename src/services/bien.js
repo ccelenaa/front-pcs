@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_URL } from '../Config';
+import { notifier } from 'components/Notifications';
 
 export default {
     gets: () => {
@@ -24,6 +25,28 @@ export default {
         .catch(function (error) {
             console.log({error});
             return {};
+        });
+    },
+
+    add: (formData) => {
+        return axios({
+            method: 'post',
+            url: `${API_URL}/biens/ajout`,
+            responseType: 'json',
+            withCredentials: true,
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+            data: formData
+        }).then((response) => {
+            if(response.status >= 200 && response.status < 300) {
+                notifier('success', `Votre bien est crée avec succes`);
+                return true;
+            }
+        }).catch(function (error) {
+            notifier('error', `Erreur d'ajout du bien`);
+            console.log({error});
+            return false;
         });
     },
 

@@ -81,17 +81,13 @@ export default function AsideSetting(props) {
             label: 'Compte',
             icon: faUser
           },{
-            menu: '/messages',
-            label: 'Messages',
-            icon: all.faComment
-          },{
             menu: '/biens',
             label: 'Mes biens',
             icon: all.faHomeLg
           },{
-            menu: '/prestations',
-            label: 'Prestations',
-            icon: all.faAdd
+            menu: '/locations',
+            label: 'Locations',
+            icon: all.faHomeLg
           },{
             menu: '/factures',
             label: 'Mes factures',
