@@ -40,7 +40,7 @@ export default function AjoutService(props) {
     });
   
     if(await service.addService(formData)) {
-      // navigate("/services");
+      navigate("/services");
     }
   };
 
