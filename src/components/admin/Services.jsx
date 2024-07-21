@@ -108,7 +108,7 @@ export default function Services(props) {
           {
             services.filter(s=>s.statut>0 && s.statut<10).map((service) => {
               const prestation = getCurrentPrestation(service);
-              const prix = prestation.prix_pretataire ? `${prestation.prix_pretataire} €` : <FontAwesomeIcon icon={all.faClockRotateLeft} className="burger" style={{}}/>;
+              const prix = prestation.prix_prestataire ? `${prestation.prix_prestataire} €` : <FontAwesomeIcon icon={all.faClockRotateLeft} className="burger" style={{}}/>;
               const pay = prestation.statut == 3 ? <FontAwesomeIcon icon={all.faCreditCard} className="burger" style={{color: "green"}}/> : <FontAwesomeIcon icon={all.faClockRotateLeft} className="burger" style={{}}/>;
 
               return <>
@@ -158,7 +158,7 @@ export default function Services(props) {
           {
             services.filter(s=>s.statut==10).map((service) => {
               const prestation = getCurrentPrestation(service);
-              const prix = prestation.prix_pretataire ? `${prestation.prix_pretataire} €` : <FontAwesomeIcon icon={all.faClockRotateLeft} className="burger" style={{}}/>;
+              const prix = prestation.prix_prestataire ? `${prestation.prix_prestataire} €` : <FontAwesomeIcon icon={all.faClockRotateLeft} className="burger" style={{}}/>;
               const pay = prestation.statut == 3 ? <FontAwesomeIcon icon={all.faCreditCard} className="burger" style={{color: "green"}}/> : <FontAwesomeIcon icon={all.faClockRotateLeft} className="burger" style={{}}/>;
 
               return <>

@@ -5,6 +5,7 @@ import { Link, NavLink, Route, Routes, BrowserRouter as Router, useLocation, Swi
 import Bien from './Bien';
 import Biens from './Biens';
 import Locations from './Locations';
+import Service from './Service';
 import Services from './Services';
 import Paiements from './Paiements';
 import Compte from './Compte';
@@ -23,6 +24,7 @@ export default function Body(props) {
       <Route path='/locations' element={<Locations {...props}/>}/>
       <Route path='/services' exact element={<Services {...props}/>}/>
       <Route path='/services/ajout' exact element={<AjoutService {...props}/>}/>
+      <Route path='/services/:id' exact element={<Service {...props}/>}/>
       <Route path='/paiements' exact element={<Paiements {...props}/>}/>
     </Routes>
   </>)

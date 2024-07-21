@@ -45,7 +45,7 @@ export default function AjoutService(props) {
   };
 
   return (<>
-  <div className="page-title" style={{textAlign:"center"}}>
+  <div className="page-title">
     Nouvelle demande de service
   </div>
     <form class="formulaire" id="service_form">

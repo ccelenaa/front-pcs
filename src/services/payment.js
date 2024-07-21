@@ -11,11 +11,16 @@ export default class Payment {
     const stripe = await stripePromise;
 
     // Call your backend to create the Checkout Session
-    const response = await fetch(`${API_URL}/payments/prestations/${id}`, {method: 'POST', credentials: 'include', body: JSON.stringify({date: new Date()})});
+    const response = await fetch(
+      `${API_URL}/payments/prestations/${id}`,
+      {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify({date: new Date()})
+      });
     const session = await response.json();
 
     if (stripe) {
-      // When the customer clicks on the button, redirect them to Checkout.
       const result = await stripe.redirectToCheckout({
         sessionId: session.id
       });
