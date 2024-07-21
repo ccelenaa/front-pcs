@@ -33,7 +33,7 @@ export default function AjoutService(props) {
 
     const serviceForm = document.getElementById('service_form');
     const formData = new FormData(serviceForm);
-  
+
     formData.delete('images');
     images.forEach((image, index) => {
       formData.append('images', image);
