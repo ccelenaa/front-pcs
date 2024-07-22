@@ -1,6 +1,8 @@
 
 import { loadStripe } from '@stripe/stripe-js';
 import { API_URL } from '../Config';
+import axios from 'axios';
+import { notifier } from 'components/Notifications';
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe('pk_test_51P7zLsLAPUg4SYkPM4Kqy0st6kN5KrZwMcEaz3fOImGOtdhHK5Q1y8FwIM3ZyetykAHtSfFl9O3n0GAKuSkdj4mO00ZccwCL1k');
@@ -35,29 +37,38 @@ export default class Payment {
     }
   };
 
-  static location = async (id) => {
+  static location = async (id, date_debut, date_fin) => {
     const stripe = await stripePromise;    
     if (stripe) {
-      const session = await fetch(
-        `${API_URL}/payments/locations/${id}`,
-        {
-          method: 'POST',
-          credentials: 'include',
-          body: JSON.stringify({debut: new Date(),fin: new Date()})
-        }).then(res => {
-          return res.json();
-        });
-
-      // When the customer clicks on the button, redirect them to Checkout.
-      const result = await stripe.redirectToCheckout({
-        sessionId: session.id
+      const session = await axios({
+        method: 'post',
+        url: `${API_URL}/payments/locations/${id}`,
+        responseType: 'json',
+        withCredentials: true,
+        data: {
+          date_debut,
+          date_fin
+        }
+      }).then((response) => {
+        if(response.status >= 200 && response.status < 300) {
+            return response.data;
+        }
+      }).catch(function (error) {
+          notifier('error', `Erreur de paiement`);
+          return null;
       });
 
-      // if (result.error) {
-      //   // If `redirectToCheckout` fails due to a browser or network
-      //   // error, display the localized error message to your customer
-      //   // using `result.error.message`.
-      // }
+      if(session){
+        const result = await stripe.redirectToCheckout({
+          sessionId: session.id
+        });
+
+        if (result.error) {
+          // If `redirectToCheckout` fails due to a browser or network
+          // error, display the localized error message to your customer
+          // using `result.error.message`.
+        }
+      }
     } else {
 
     }

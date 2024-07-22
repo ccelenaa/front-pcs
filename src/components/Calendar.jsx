@@ -33,6 +33,10 @@ const Calendar = ({ availabilities }) => {
     let start = parseDate(date_debut);
     let end = parseDate(date_fin);
 
+    // Adjust for full-day dates
+    start.setHours(0, 0, 0, 0);
+    end.setHours(23, 59, 59, 999);
+
     for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
       availabilityMap[formatDate(d)] = true;
     }
@@ -54,8 +58,8 @@ const Calendar = ({ availabilities }) => {
   return (
     <div className="calendar">
       {months.map((monthDays, index) => {
-        const firstDayOfMonth = monthDays[0].getDay() || 7; // Adjust to make Monday the first day of the week
-        const emptyDays = Array.from({ length: firstDayOfMonth - 1 });
+        const firstDayOfMonth = (monthDays[0].getDay() || 7) - 1; // Adjust to make Monday the first day of the week
+        const emptyDays = Array.from({ length: firstDayOfMonth });
 
         return (
           <div key={index} className="month">

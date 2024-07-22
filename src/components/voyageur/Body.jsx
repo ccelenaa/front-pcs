@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { API_URL } from './../../Config';
 import { Link, NavLink, Route, Routes, BrowserRouter as Router, useLocation, Switch} from 'react-router-dom';
 import Bien from './Bien';
+import BienDispo from './BienDispo';
 import Biens from './Biens';
 import Locations from './Locations';
 import Service from './Service';
@@ -21,6 +22,7 @@ export default function Body(props) {
       <Route path='/compte' exact element={<Compte {...props}/>}/>
       <Route path='/biens' exact element={<Biens {...props}/>}/>
       <Route path='/biens/:id' exact element={<Bien {...props}/>}/>
+      <Route path='/biens/:id/dispo' exact element={<BienDispo {...props}/>}/>
       <Route path='/locations' element={<Locations {...props}/>}/>
       <Route path='/services' exact element={<Services {...props}/>}/>
       <Route path='/services/ajout' exact element={<AjoutService {...props}/>}/>

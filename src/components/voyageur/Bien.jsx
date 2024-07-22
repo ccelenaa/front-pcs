@@ -7,7 +7,6 @@ import Payment from 'services/payment';
 import { useParams } from 'react-router-dom';
 import * as all from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Calendar from '../Calendar';
 
 export default function Biens(props) {
   const {id} = useParams();
@@ -19,19 +18,15 @@ export default function Biens(props) {
   }, []);
 
   const louer = () => {
-    Payment.location(id);
+    const date_debut = document.getElementById('date_debut').value;
+    const date_fin = document.getElementById('date_fin').value;
+    Payment.location(id, date_debut, date_fin);
   }
 
   if(!bien) {
     return <></>
   }
 
-  const availabilities = [
-    { date_debut: '2024-01-01', date_fin: '2024-01-10' },
-    { date_debut: '2024-02-15', date_fin: '2024-02-20' },
-    { date_debut: '2024-03-01', date_fin: '2024-03-05' }
-  ];
-  console.log(bien.locations);
   return (<>
     <div className="tableur">
       <div className='tab ajout'>
@@ -41,9 +36,6 @@ export default function Biens(props) {
       </div>
     </div>
 
-    <Calendar availabilities={availabilities} />
-
-
     <div className="tab-container location">
       <div className="row header">
         <div className="cell center title">Location</div>
@@ -51,9 +43,10 @@ export default function Biens(props) {
       <div className="row">
         <div className="cell slim200">Dates</div>
         <div className="cell">
-          <input type="date"/>
-          <input type="date"/>
+          <input type="date" id="date_debut"/>
+          <input type="date" id="date_fin"/>
           <button onClick={louer}>Louer</button>
+          <NavLink to={`/biens/${bien.id}/dispo`}><button>Dispo</button></NavLink>
         </div>
       </div>
       <div className="row">
