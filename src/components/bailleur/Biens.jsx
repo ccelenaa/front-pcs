@@ -1,8 +1,7 @@
 
 
-import React, { useEffect, useState,  } from 'react';
+import React, { useEffect, useState } from 'react';
 import bienService from '../../services/bien';
-import Utils from 'services/payment';
 import { NavLink } from 'react-router-dom';
 import * as all from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,14 +22,6 @@ export default function Biens(props) {
     getbiens();
   },[]);
 
-  const validation = (event) => {
-    const bien_id = event.target.getAttribute('data-bienid');
-    const valider = event.target.checked;
-    bienService.valider(bien_id, valider).then(({data: u}) => {
-      setbiens(biens.map(b => b.id == u.id ? u : b));
-      biens.map(b => console.log(b.id, b.verified_at));
-    });
-  }
 
   return (<>
     <div className="tableur">
@@ -42,25 +33,43 @@ export default function Biens(props) {
     </div>
     <div className="tab-container">
       <div className="row header">
-        <div className="cell slim120">Type</div>
-        <div className="cell slim70">Surface</div>
+        <div className="cell slim" title="Visibilité du bien pour les voyageurs">Vis</div>
+        <div className="cell slim90" style={{textAlign: "left"}}>Type</div>
         <div className="cell">Bien</div>
-        <div className="cell slim70">Prix</div>
-        {/* <div className="cell slim">Sus</div>
-        <div className="cell slim">Val</div> */}
+        <div className="cell slim70">Surface</div>
+        <div className="cell slim60">Prix</div>
+        <div className="cell slim" title="Suspension Bailleur">SB</div>
+        <div className="cell slim" title="Suspension Admin">SA</div>
+        <div className="cell slim" title="Validation Admin">VA</div>
       </div>
       {
-        biens.filter(b=>(b.validated_at!==null && b.suspended_at==null && b.bailleur_suspended_at==null)).map((bien) => 
+        biens.map((bien) => 
           <>
-            <NavLink to={`/biens/${bien.id}`} className={"row bien_"+bien.id+""}>
-              <div className="cell slim120">{bien.type}</div>
+            <NavLink to={`/biens/${bien.id}`} className="row">
+              {
+                bien.date_validation && bien.date_suspension == null && bien.date_suspension_bailleur == null
+                ? <div className="cell slim cgreen"><FontAwesomeIcon icon={all.faEye} className="burger" title={`Visible pour les voyageurs`}/></div>
+                : <div className="cell slim cred"><FontAwesomeIcon icon={all.faEyeSlash} className="burger" title={`Invisible pour les voyageurs`}/></div>
+              }
+              <div className="cell slim90" style={{textAlign: "left"}}>{bien.type}</div>
+              <div className="cell">{bien.titre}</div>
               <div className="cell slim70">{bien.surface}</div>
-              <div className="cell">{bien.description}</div>
-              <div className="cell slim70" style={{textAlign: 'right'}}>{(bien.prix*1.1).toFixed(2)} {bien.devise}</div>
-              {/* <div className="cell slim50"><input id={`${bien.id}_b_val`} data-bienid={bien.id} type="checkbox" defaultChecked={bien.bailleur_suspended_at !== null} title={bien.bailleur_suspended_at?.slice(0, 16).replace('T', ' ')} disabled/></div>
-              <div className="cell slim"><input id={`${bien.id}_val`} data-bienid={bien.id} type="checkbox" defaultChecked={bien.suspended_at !== null} onChange={suspenssion} title={bien.suspended_at?.slice(0, 16).replace('T', ' ')} style={{display: bien.validated_at === null ? "none" : "initial"}}/></div>
-              <div className="cell slim"><input id={`${bien.id}_sus`} data-bienid={bien.id} type="checkbox" defaultChecked={bien.validated_at !== null} onChange={validation} title={bien.validated_at?.slice(0, 16).replace('T', ' ')} disabled={bien.validated_at !== null}/></div> */}
-              {/* <div className="cell slim"><FontAwesomeIcon icon={all.faRemove} className="burger" style={{fontSize: '18px', cursor: 'pointer'}}/></div> */}
+              <div className="cell slim60">{bien.prix} €</div>
+              {
+                bien.date_suspension_bailleur == null
+                ? <div className="cell slim cgreenc"><FontAwesomeIcon icon={all.faLockOpen} className="burger" title={`Non suspendu par le Bailleur`}/></div>
+                : <div className="cell slim cred"><FontAwesomeIcon icon={all.faLock} className="burger" title={`Suspension Bailleur le ${bien.date_suspension_bailleur.slice(0, 16).replace('T', ' ')}`}/></div>
+              }
+              {
+                bien.date_suspension == null
+                ? <div className="cell slim cgreenc"><FontAwesomeIcon icon={all.faLockOpen} className="burger" title={`Non suspendu par Admin`}/></div>
+                : <div className="cell slim cred"><FontAwesomeIcon icon={all.faLock} className="burger" title={`Suspension Admin le ${bien.date_suspension.slice(0, 16).replace('T', ' ')}`}/></div>
+              }
+              {
+                bien.date_validation == null
+                ? <div className="cell slim cblue"><FontAwesomeIcon icon={all.faClockRotateLeft} className="burger" title={`Attente de validation par l'admin`}/></div>
+                : <div className="cell slim cgreen"><FontAwesomeIcon icon={all.faCheck} className="burger" title={`Validation Admin le  ${bien.date_validation.slice(0, 16).replace('T', ' ')}`}/></div>
+              }
             </NavLink>
           </>
         )

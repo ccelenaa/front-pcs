@@ -113,9 +113,15 @@ export default {
             data: {
                 suspendre
             }
+        }).then((response) => {
+            if(response.status >= 200 && response.status < 300) {
+                notifier('success', `Bien ${suspendre?'suspendu':'réintégré'}`);
+                return response.data;
+            }
         }).catch(function (error) {
-            console.log({error})
-            return null;
+            notifier('error', `Erreur de suspension du bien`);
+            console.log({error});
+            return false;
         });
     },
 }

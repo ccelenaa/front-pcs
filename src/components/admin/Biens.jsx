@@ -26,6 +26,7 @@ export default function Biens(props) {
   return (<>
     <div className="tab-container">
       <div className="row header">
+        <div className="cell slim" title="Visibilité du bien pour les voyageurs">Vis</div>
         <div className="cell slim120">Propriétaire</div>
         <div className="cell slim90">Type</div>
         <div className="cell">Bien</div>
@@ -39,6 +40,11 @@ export default function Biens(props) {
         biens.map((bien) => 
           <>
             <NavLink to={`/biens/${bien.id}`} className="row">
+              {
+                bien.date_validation && bien.date_suspension == null && bien.date_suspension_bailleur == null
+                ? <div className="cell slim cgreen"><FontAwesomeIcon icon={all.faEye} className="burger" title={`Visible pour les voyageurs`}/></div>
+                : <div className="cell slim cred"><FontAwesomeIcon icon={all.faEyeSlash} className="burger" title={`Invisible pour les voyageurs`}/></div>
+              }
               <div className="cell slim120">{bien.bailleur.nom}</div>
               <div className="cell slim90">{bien.type}</div>
               <div className="cell">{bien.titre}</div>
