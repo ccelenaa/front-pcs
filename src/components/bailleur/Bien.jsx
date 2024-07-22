@@ -65,10 +65,6 @@ export default function Biens(props) {
         <div className="cell center title">Bien immobilier</div>
       </div>
       <div className="row">
-        <div className="cell slim200">Bailleur</div>
-        <div className="cell"><NavLink to={`/bailleurs/${bien.bailleur?.id}`}>{bien.bailleur?.nom}</NavLink></div>
-      </div>
-      <div className="row">
         <div className="cell slim200">Type</div>
         <div className="cell">{bien.type}</div>
       </div>

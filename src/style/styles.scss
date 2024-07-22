@@ -476,6 +476,59 @@ div {
   }
 }
 
+.calendar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.month {
+  width: 280px; /* Adjust this width as needed */
+  margin: 5px;
+}
+
+.month h4 {
+  text-align: center;
+}
+
+.weekdays, .days {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.weekday, .day {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2px;
+  border: 0px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.weekday {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.day.unavailable {
+  background-color: rgb(67, 167, 112);
+  color: white;
+}
+
+.day.available {
+  background-color: rgb(207, 77, 54);
+  color: white;
+}
+
+.day.empty {
+  background-color: transparent;
+  border: none;
+}
+
 .tab-container {
   display: flex;
   flex-direction: column;

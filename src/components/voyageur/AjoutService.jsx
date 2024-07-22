@@ -59,7 +59,7 @@ export default function AjoutService(props) {
       </div>
       <div>
         <label for="">Prix max</label>
-        <input  name="prix_max" type="text"/>
+        <input  name="prix_max" type="text" placeholder="140"/>
       </div>
       <div>
         <label>Date de prestation</label>
