@@ -22,23 +22,6 @@ export default function Biens(props) {
     getbiens();
   },[]);
 
-  const validation = (event) => {
-    const bien_id = event.target.getAttribute('data-bienid');
-    const valider = event.target.checked;
-    bienService.valider(bien_id, valider).then(({data: u}) => {
-      setbiens(biens.map(b => b.id == u.id ? u : b));
-      biens.map(b => console.log(b.id, b.date_validation));
-    });
-  }
-  
-  const suspension = (event) => {
-    const bien_id = event.target.getAttribute('data-bienid');
-    const suspendre = event.target.checked;
-    bienService.suspendre(bien_id, suspendre).then(({data: u}) => {
-      setbiens(biens.map(p => p.id == u.id ? u : p));
-      biens.map(p => console.log(p.id, p.date_suspension));
-    });
-  }
 
   return (<>
     <div className="tab-container">
@@ -61,10 +44,9 @@ export default function Biens(props) {
               <div className="cell">{bien.titre}</div>
               <div className="cell slim70">{bien.surface}</div>
               <div className="cell slim60">{bien.prix} €</div>
-              <div className="cell slim50"><input id={`${bien.id}_b_val`} data-bienid={bien.id} type="checkbox" defaultChecked={bien.date_suspension_bailleur !== null} title={bien.date_suspension_bailleur?.slice(0, 16).replace('T', ' ')} disabled/></div>
-              <div className="cell slim"><input id={`${bien.id}_sus`} data-bienid={bien.id} type="checkbox" defaultChecked={bien.date_suspension !== null} onChange={suspension} title={bien.date_suspension?.slice(0, 16).replace('T', ' ')} style={{display: bien.date_validation === null ? "none" : "initial"}}/></div>
-              <div className="cell slim"><input id={`${bien.id}_val`} data-bienid={bien.id} type="checkbox" defaultChecked={bien.date_validation !== null} onChange={validation} title={bien.date_validation?.slice(0, 16).replace('T', ' ')} disabled={bien.date_validation !== null}/></div>
-              {/* <div className="cell slim"><FontAwesomeIcon icon={all.faRemove} className="burger" style={{fontSize: '18px', cursor: 'pointer'}}/></div> */}
+              <div className="cell slim50">{bien.date_suspension_bailleur == null ? <></> : <FontAwesomeIcon icon={all.faCheck} className="burger"/>}</div>
+              <div className="cell slim">{bien.date_suspension == null ? <></> : <FontAwesomeIcon icon={all.faCheck} className="burger"/>}</div>
+              <div className="cell slim">{bien.date_validation == null ? <></> : <FontAwesomeIcon icon={all.faCheck} className="burger"/>}</div>
             </NavLink>
           </>
         )
