@@ -80,6 +80,10 @@ export default function Prestataire(props) {
         <div className="cell">{prestataire.telephone}</div>
       </div>
       <div className="row">
+        <div className="cell slim120">Prestations</div>
+        <div className="cell">{prestataire.prestations?.length}</div>
+      </div>
+      <div className="row">
         <div className="cell slim120">Inscription</div>
         <div className="cell">{prestataire.date_creation}</div>
       </div>

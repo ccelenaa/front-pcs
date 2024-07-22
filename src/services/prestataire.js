@@ -54,7 +54,7 @@ export default {
                 return response.data;
             }
         }).catch(function (error) {
-            notifier('error', `Erreur de suspension du bien`);
+            notifier('error', `Erreur de validation du prestataire`);
             console.log({error});
             return null;
         });

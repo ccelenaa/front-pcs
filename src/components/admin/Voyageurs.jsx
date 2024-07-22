@@ -44,7 +44,7 @@ export default function Voyageurs(props) {
     <div className="tab-container">
       <div className="row header">
         <div className="cell">Voyageur</div>
-        <div className="cell">Créer</div>
+        <div className="cell">Inscription</div>
         <div className="cell slim" title="Suspension Admin">SA</div>
         <div className="cell slim" title="Validation Admin">VA</div>
       </div>

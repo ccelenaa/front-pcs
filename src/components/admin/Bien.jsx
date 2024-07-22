@@ -95,6 +95,10 @@ export default function Biens(props) {
         <div className="cell">{(bien.prix*1.1).toFixed(2)} {bien.devise}</div>
       </div>
       <div className="row">
+        <div className="cell slim200">Contact</div>
+        <div className="cell">{bien.contact}</div>
+      </div>
+      <div className="row">
         <div className="cell slim200">Images</div>
         <div className="cell">
           <div className="image-container">

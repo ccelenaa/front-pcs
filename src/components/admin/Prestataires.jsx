@@ -18,7 +18,8 @@ export default function Prestataires(props) {
     <div className="tab-container">
       <div className="row header">
         <div className="cell">Pretstatire</div>
-        <div className="cell">Créer</div>
+        <div className="cell">Inscription</div>
+        <div className="cell slim80">Prestations</div>
         <div className="cell slim" title="Suspension Admin">SA</div>
         <div className="cell slim" title="Validation Admin">VA</div>
       </div>
@@ -28,6 +29,7 @@ export default function Prestataires(props) {
               <NavLink to={`/prestataires/${prestataire.id}`} className={"row"}>
                 <div className="cell">{prestataire.nom}</div>
                 <div className="cell">{prestataire.date_creation.slice(0, 16).replace('T', ' ')}</div>
+                <div className="cell slim80">{prestataire.prestations?.length}</div>
                 {
                   prestataire.date_suspension == null
                   ? <div className="cell slim cgreenc"><FontAwesomeIcon icon={all.faLockOpen} className="burger" title={`Non suspendu par Admin`}/></div>
