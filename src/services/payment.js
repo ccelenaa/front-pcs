@@ -54,6 +54,7 @@ export default class Payment {
             return response.data;
         }
       }).catch(function (error) {
+        console.log({error})
           notifier('error', `Erreur de paiement`);
           return null;
       });
