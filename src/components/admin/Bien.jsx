@@ -19,12 +19,14 @@ export default function Biens(props) {
 
   const validation = (event) => {
     const valider = event.target.checked;
-    bienService.valider(bien.id, valider);
+    bienService.valider(bien.id, valider)
+    .then(b => setbien(b?b:bien));
   }
   
   const suspension = (event) => {
     const suspendre = event.target.checked;
-    bienService.suspendre(bien.id, suspendre);
+    bienService.suspendre(bien.id, suspendre)
+    .then(b => setbien(b?b:bien));
   }
 
   if(!bien) {
@@ -39,22 +41,35 @@ export default function Biens(props) {
         </NavLink>
       </div>
     </div>
-    <div className="tab-container">
+    <div className="tab-container admin">
+      <div className="row header">
+        <div className="cell center title">Administration</div>
+      </div>
       <div className="row">
         <div className="cell slim200">Admin Validation</div>
-        <div className="cell"><input type="checkbox" defaultChecked={bien.date_validation !== null} onChange={validation} title={bien.date_validation?.slice(0, 16).replace('T', ' ')} disabled={bien.date_validation !== null}/></div>
+        {
+          bien.date_validation == null
+          ? <div className="cell"><input type="checkbox" onChange={validation}/></div>
+          : <div className="cell cgreen"><FontAwesomeIcon icon={all.faCheck} className="burger"/> {bien.date_validation?.slice(0, 16).replace('T', ' ')}</div>
+        }
       </div>
       <div className="row">
         <div className="cell slim200">Admin Suspension</div>
         <div className="cell"><input type="checkbox" defaultChecked={bien.date_suspension !== null} onChange={suspension} title={bien.date_suspension?.slice(0, 16).replace('T', ' ')} style={{display: bien.date_validation === null ? "none" : "initial"}}/></div>
       </div>
       <div className="row">
-        <div className="cell slim200">Bailleur Suspenssion</div>
-        <div className="cell"><input type="checkbox" defaultChecked={bien.date_suspension_bailleur !== null} title={bien.date_suspension_bailleur?.slice(0, 16).replace('T', ' ')} disabled/></div>
+        <div className="cell slim200">Bailleur Suspension</div>
+        {
+          bien.date_suspension_bailleur == null
+          ? <div className="cell cgreenc"><FontAwesomeIcon icon={all.faLockOpen} className="burger"/></div>
+          : <div className="cell cred"><FontAwesomeIcon icon={all.faLock} className="burger"/> {bien.date_suspension_bailleur?.slice(0, 16).replace('T', ' ')}</div>
+        }
       </div>
     </div>
     <div className="tab-container">
-
+      <div className="row header">
+        <div className="cell center title">Bien immobilier</div>
+      </div>
       <div className="row">
         <div className="cell slim200">Bailleur</div>
         <div className="cell"><NavLink to={`/bailleurs/${bien.bailleur?.id}`}>{bien.bailleur?.nom}</NavLink></div>
@@ -72,7 +87,7 @@ export default function Biens(props) {
         <div className="cell">{bien.description}</div>
       </div>
       <div className="row">
-        <div className="cell slim200">Surface</div>
+        <div className="cell slim200">Superficie</div>
         <div className="cell">{bien.surface}</div>
       </div>
       <div className="row">

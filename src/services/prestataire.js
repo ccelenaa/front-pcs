@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_URL } from '../Config';
+import { notifier } from 'components/Notifications';
 
 export default {
     get: (id) => {
@@ -47,9 +48,14 @@ export default {
             data: {
                 valider
             }
-        }).then((response) => response.status === 200 ? response.data : {})
-        .catch(function (error) {
-            console.log({error})
+        }).then((response) => {
+            if(response.status >= 200 && response.status < 300) {
+                notifier('success', `Prestataire ${valider?'validé':'invalidé'}`);
+                return response.data;
+            }
+        }).catch(function (error) {
+            notifier('error', `Erreur de suspension du bien`);
+            console.log({error});
             return null;
         });
     },
@@ -63,9 +69,14 @@ export default {
             data: {
                 suspendre
             }
-        }).then((response) => response.status === 200 ? response.data : {})
-        .catch(function (error) {
-            console.log({error})
+        }).then((response) => {
+            if(response.status >= 200 && response.status < 300) {
+                notifier('success', `Prestataire ${suspendre?'suspendu':'réintégré'}`);
+                return response.data;
+            }
+        }).catch(function (error) {
+            notifier('error', `Erreur de suspension du Prestataire`);
+            console.log({error});
             return null;
         });
     },

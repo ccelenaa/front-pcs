@@ -31,22 +31,34 @@ export default function Biens(props) {
         <div className="cell">Bien</div>
         <div className="cell slim70">Surface</div>
         <div className="cell slim60">Prix</div>
-        <div className="cell slim50">B-Sus</div>
-        <div className="cell slim">Sus</div>
-        <div className="cell slim">Val</div>
+        <div className="cell slim" title="Suspension Bailleur">SB</div>
+        <div className="cell slim" title="Suspension Admin">SA</div>
+        <div className="cell slim" title="Validation Admin">VA</div>
       </div>
       {
         biens.map((bien) => 
           <>
-            <NavLink to={`/biens/${bien.id}`} className={"row bien_"+bien.id+""}>
+            <NavLink to={`/biens/${bien.id}`} className="row">
               <div className="cell slim120">{bien.bailleur.nom}</div>
               <div className="cell slim90">{bien.type}</div>
               <div className="cell">{bien.titre}</div>
               <div className="cell slim70">{bien.surface}</div>
               <div className="cell slim60">{bien.prix} €</div>
-              <div className="cell slim50">{bien.date_suspension_bailleur == null ? <></> : <FontAwesomeIcon icon={all.faCheck} className="burger"/>}</div>
-              <div className="cell slim">{bien.date_suspension == null ? <></> : <FontAwesomeIcon icon={all.faCheck} className="burger"/>}</div>
-              <div className="cell slim">{bien.date_validation == null ? <></> : <FontAwesomeIcon icon={all.faCheck} className="burger"/>}</div>
+              {
+                bien.date_suspension_bailleur == null
+                ? <div className="cell slim cgreenc"><FontAwesomeIcon icon={all.faLockOpen} className="burger" title={`Non suspendu par le Bailleur`}/></div>
+                : <div className="cell slim cred"><FontAwesomeIcon icon={all.faLock} className="burger" title={`Suspension Bailleur le ${bien.date_suspension_bailleur.slice(0, 16).replace('T', ' ')}`}/></div>
+              }
+              {
+                bien.date_suspension == null
+                ? <div className="cell slim cgreenc"><FontAwesomeIcon icon={all.faLockOpen} className="burger" title={`Non suspendu par Admin`}/></div>
+                : <div className="cell slim cred"><FontAwesomeIcon icon={all.faLock} className="burger" title={`Suspension Admin le ${bien.date_suspension.slice(0, 16).replace('T', ' ')}`}/></div>
+              }
+              {
+                bien.date_validation == null
+                ? <div className="cell slim cblue"><FontAwesomeIcon icon={all.faClockRotateLeft} className="burger" title={`Attente de validation par l'admin`}/></div>
+                : <div className="cell slim cgreen"><FontAwesomeIcon icon={all.faCheck} className="burger" title={`Validation Admin le  ${bien.date_validation.slice(0, 16).replace('T', ' ')}`}/></div>
+              }
             </NavLink>
           </>
         )

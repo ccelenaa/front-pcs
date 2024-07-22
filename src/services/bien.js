@@ -73,8 +73,8 @@ export default {
             }
         }).then((response) => {
             if(response.status >= 200 && response.status < 300) {
-                notifier('success', `Bien ${valider?'validé':'invalidé'} avec succes`);
-                return true;
+                notifier('success', `Bien ${valider?'validé':'invalidé'}`);
+                return response.data;
             }
         }).catch(function (error) {
             notifier('error', `Erreur de validation de bien`);
@@ -94,8 +94,8 @@ export default {
             }
         }).then((response) => {
             if(response.status >= 200 && response.status < 300) {
-                notifier('success', `Bien ${suspendre?'suspendu':'réintégré'} avec succes`);
-                return true;
+                notifier('success', `Bien ${suspendre?'suspendu':'réintégré'}`);
+                return response.data;
             }
         }).catch(function (error) {
             notifier('error', `Erreur de suspension du bien`);

@@ -67,7 +67,7 @@ export const Success = (props) => {
   return (
     <div className='notification'>
       <div className='notification-icon'>
-        <FontAwesomeIcon icon={all.faAnchorLock} />
+        <FontAwesomeIcon icon={all.faCheck} />
       </div>
       <div className="notification-content">{props.data.message}</div>
     </div>
