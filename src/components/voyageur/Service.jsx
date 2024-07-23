@@ -39,7 +39,7 @@ export default function Service(props) {
     Payment.prestation(prestation.id);
   }
 
-  if(service == null) {
+  if(!service) {
     return <></>;
   }
 
@@ -54,7 +54,9 @@ export default function Service(props) {
       </div>
     </div>
 
-    <div className="tab-container admin">
+    {
+    prestation
+    ? <><div className="tab-container admin">
       <div className="row header">
         <div className="cell center title">Etapes et Actions</div>
       </div>
@@ -88,6 +90,8 @@ export default function Service(props) {
         }
       </div>
     </div>
+    </>
+    : <></>}
 
     <div className="tab-container">
       <div className="row header">
