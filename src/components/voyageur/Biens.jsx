@@ -30,7 +30,7 @@ export default function Biens(props) {
         <div className="cell slim70">Prix</div>
       </div>
       {
-        biens.filter(b=>(b.validated_at!==null && b.suspended_at==null && b.bailleur_suspended_at==null)).map((bien) => 
+        biens.filter(b=>(b.date_validation!==null && b.date_suspension==null && b.date_suspension_bailleur==null)).map((bien) => 
           <>
             <NavLink to={`/biens/${bien.id}`} className={"row bien_"+bien.id+""}>
               <div className="cell slim120">{bien.type}</div>

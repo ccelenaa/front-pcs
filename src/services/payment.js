@@ -53,9 +53,24 @@ export default class Payment {
             return response.data;
         }
       }).catch(function (error) {
-        console.log({error})
-          notifier('error', `Erreur de paiement`);
+        if (error.response) {
+          const status = error.response.status;
+      
+          if (status === 409) {
+            notifier('error', `Bien indisponible pour ces dates`);
+            return null;
+          } else if (status === 400) {
+            notifier('error', `Dates incorrectes`);
+            return null;
+          } else {
+            notifier('error', `Erreur de paiement`);
+            return null;
+          }
+        } else {
+          // Si error.response n'existe pas, gérer les autres types d'erreurs (e.g., réseau)
+          notifier('error', `Erreur de réseau`);
           return null;
+        }
       });
 
       if(session){
