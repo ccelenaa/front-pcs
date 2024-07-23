@@ -3,28 +3,20 @@ import * as all from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import serviceService from '../../services/service';
 import prestataireService from '../../services/prestataire';
+import { NavLink } from 'react-router-dom';
 
 export default function Services(props) {
 
   const [anglet, setAnglet] = React.useState(1);
   const [services, setServices] = React.useState([]);
-  const [prestataires, setPrestataires] = React.useState([]);
 
   const getData = async () => {
     setServices(await serviceService.gets());
-    setPrestataires(await prestataireService.gets());
   }
 
   React.useEffect(async () => {
     await getData();
   },[]);
-
-  const changePrestataire = (event) => {
-    const service_id = event.currentTarget.dataset.serviceid;
-    const prestataire_id = event.currentTarget.value;
-
-    serviceService.setPrestataire(service_id, prestataire_id).then(async () => await getData());
-  }
 
   const getCurrentPrestation = (service) => {
     if(
@@ -58,19 +50,18 @@ export default function Services(props) {
         <div className="cell">service</div>
         <div className="cell slim50">Max</div>
         <div className="cell slim120">Date</div>
-        <div className="cell">Prestataire</div>
+        <div className="cell slim120 center">Prestataire</div>
       </div>
       {
         services.filter(s=>s.statut==0).map((service) => {
-          const prestation = getCurrentPrestation(service);
-
           return <>
-            <div className={"row service_"+service.id+""}>
+            <NavLink to={`/services/${service.id}`} className="row">
               <div className="cell">{service.voyageur.nom}</div>
               <div className="cell">{service.label}</div>
               <div className="cell slim50">{service.prix_max} €</div>
               <div className="cell slim120">{service.date?.slice(0, 16).replace('T', ' ')}</div>
-              <div className="cell">
+              <div className="cell slim120 center"><FontAwesomeIcon icon={all.faClockRotateLeft} className="burger"/></div>
+              {/* <div className="cell">
                 <select onChange={changePrestataire} data-serviceid={service.id} className={service.prestataire ? "assigned":""}>
                   {                    
                     <>
@@ -85,8 +76,8 @@ export default function Services(props) {
                     </>
                   }
                 </select>
-              </div>
-            </div>
+              </div> */}
+            </NavLink>
           </>
           }
         )
@@ -100,10 +91,10 @@ export default function Services(props) {
             <div className="cell">Voyageur</div>
             <div className="cell">service</div>
             <div className="cell slim50">Max</div>
-            <div className="cell slim50">Prix</div>
-            <div className="cell slim50">pay</div>
             <div className="cell slim120">Date</div>
             <div className="cell">Prestataire</div>
+            <div className="cell slim50">Prix</div>
+            <div className="cell slim50">pay</div>
           </div>
           {
             services.filter(s=>s.statut>0 && s.statut<10).map((service) => {
@@ -112,14 +103,15 @@ export default function Services(props) {
               const pay = prestation.statut == 3 ? <FontAwesomeIcon icon={all.faCreditCard} className="burger" style={{color: "green"}}/> : <FontAwesomeIcon icon={all.faClockRotateLeft} className="burger" style={{}}/>;
 
               return <>
-                <div className={"row service_"+service.id+""}>
+                <NavLink to={`/services/${service.id}`} className="row">
                   <div className="cell">{service.voyageur.nom}</div>
                   <div className="cell">{service.label}</div>
                   <div className="cell slim50">{service.prix_max} €</div>
+                  <div className="cell slim120">{service.date?.slice(0, 16).replace('T', ' ')}</div>
+                  <div className="cell">{prestation.prestataire.nom}</div>
                   <div className="cell slim50">{prix}</div>
                   <div className="cell slim50">{pay}</div>
-                  <div className="cell slim120">{service.date?.slice(0, 16).replace('T', ' ')}</div>
-                  <div className="cell">
+              {/* <div className="cell">
                     <select onChange={changePrestataire} data-serviceid={service.id} className={service.prestataire ? "assigned":""}>
                       {                    
                         <>
@@ -134,8 +126,8 @@ export default function Services(props) {
                         </>
                       }
                     </select>
-                  </div>
-                </div>
+                  </div> */}
+                </NavLink>
               </>
               }
             )
@@ -149,11 +141,11 @@ export default function Services(props) {
             <div className="cell">Voyageur</div>
             <div className="cell">service</div>
             <div className="cell slim50">Max</div>
+            <div className="cell slim120">Date</div>
+            <div className="cell">Prestataire</div>
             <div className="cell slim50">Prix</div>
             <div className="cell slim50">pay</div>
             <div className="cell slim80">Note</div>
-            <div className="cell slim120">Date</div>
-            <div className="cell">Prestataire</div>
           </div>
           {
             services.filter(s=>s.statut==10).map((service) => {
@@ -162,10 +154,12 @@ export default function Services(props) {
               const pay = prestation.statut == 3 ? <FontAwesomeIcon icon={all.faCreditCard} className="burger" style={{color: "green"}}/> : <FontAwesomeIcon icon={all.faClockRotateLeft} className="burger" style={{}}/>;
 
               return <>
-                <div className={"row service_"+service.id+""}>
+                <NavLink to={`/services/${service.id}`} className="row">
                   <div className="cell">{service.voyageur.nom}</div>
                   <div className="cell">{service.label}</div>
                   <div className="cell slim50">{service.prix_max} €</div>
+                  <div className="cell slim120">{service.date?.slice(0, 16).replace('T', ' ')}</div>
+                  <div className="cell">{prestation.prestataire.nom}</div>
                   <div className="cell slim50">{prix}</div>
                   <div className="cell slim50">{pay}</div>
                   <div className="cell slim80">
@@ -175,24 +169,7 @@ export default function Services(props) {
                     }
                     </div>
                   </div>
-                  <div className="cell slim120">{service.date?.slice(0, 16).replace('T', ' ')}</div>
-                  <div className="cell">
-                    <select onChange={changePrestataire} data-serviceid={service.id} className={service.prestataire ? "assigned":""}>
-                      {                    
-                        <>
-                          <option key="0" value="0">
-                            Selection du prestataire
-                          </option>
-                          {prestataires.map(({ id, nom }) => (
-                            <option key={id} value={id} selected={id == prestation.id_prestataire}>
-                              {nom}
-                            </option>
-                          ))}
-                        </>
-                      }
-                    </select>
-                  </div>
-                </div>
+                </NavLink>
               </>
               }
             )

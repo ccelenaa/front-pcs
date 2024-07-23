@@ -72,10 +72,19 @@ export default {
             data: {
                 id_prestataire
             }
-        }).then((response) => response.status === 200 ? response.data : {})
-        .catch(function (error) {
-            console.log({error})
-            return null;
+        }).then((response) => {
+            if(response.status >= 200 && response.status < 300) {
+                if(id_prestataire > 0) {
+                    notifier('success', `Prestation affecté au Prestataire`);
+                } else {
+                    notifier('success', `Préstation retirée au préstataire`);
+                }
+                return response.data;
+            }
+        }).catch(function (error) {
+            notifier('error', `Erreur d'affectation du préstataire'`);
+            console.log({error});
+            return false;
         });
     },
 
