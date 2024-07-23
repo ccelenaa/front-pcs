@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { API_URL } from './../../Config';
 import { Link, NavLink, Route, Routes, BrowserRouter as Router, useLocation, Switch} from 'react-router-dom';
 import Bien from './Bien';
-import BienDispo from './BienDispo';
+import BienDispo from '../BienDispo';
 import Biens from './Biens';
 import Locations from './Locations';
 import Service from './Service';

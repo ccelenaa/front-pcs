@@ -61,22 +61,6 @@ export default function Services(props) {
               <div className="cell slim50">{service.prix_max} €</div>
               <div className="cell slim120">{service.date?.slice(0, 16).replace('T', ' ')}</div>
               <div className="cell slim120 center"><FontAwesomeIcon icon={all.faClockRotateLeft} className="burger"/></div>
-              {/* <div className="cell">
-                <select onChange={changePrestataire} data-serviceid={service.id} className={service.prestataire ? "assigned":""}>
-                  {                    
-                    <>
-                      <option key="0" value="0">
-                        Selection du prestataire
-                      </option>
-                      {prestataires.map(({ id, nom }) => (
-                        <option key={id} value={id} selected={id == prestation.id_prestataire}>
-                          {nom}
-                        </option>
-                      ))}
-                    </>
-                  }
-                </select>
-              </div> */}
             </NavLink>
           </>
           }
@@ -111,22 +95,6 @@ export default function Services(props) {
                   <div className="cell">{prestation.prestataire.nom}</div>
                   <div className="cell slim50">{prix}</div>
                   <div className="cell slim50">{pay}</div>
-              {/* <div className="cell">
-                    <select onChange={changePrestataire} data-serviceid={service.id} className={service.prestataire ? "assigned":""}>
-                      {                    
-                        <>
-                          <option key="0" value="0">
-                            Selection du prestataire
-                          </option>
-                          {prestataires.map(({ id, nom }) => (
-                            <option key={id} value={id} selected={id == prestation.id_prestataire}>
-                              {nom}
-                            </option>
-                          ))}
-                        </>
-                      }
-                    </select>
-                  </div> */}
                 </NavLink>
               </>
               }

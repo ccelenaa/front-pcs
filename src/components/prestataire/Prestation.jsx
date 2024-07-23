@@ -3,26 +3,24 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import serviceService from '../../services/service';
-import Payment from 'services/payment';
+import prestataireService from '../../services/prestataire';
+import prestationService from '../../services/prestation';
 import { useParams } from 'react-router-dom';
 import * as all from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function Service(props) {
+export default function Prestation(props) {
   const {id} = useParams();
 
   const [service, setService] = React.useState(null);
+  const [prestataires, setPrestataires] = React.useState(null);
 
   React.useEffect(async () => {
     setService(await serviceService.get(id));
+    setPrestataires(await prestataireService.gets());
   }, []);
 
-  const louer = () => {
-    Payment.location(id);
-  }
-
   const getCurrentPrestation = (service) => {
-    console.log(service)
     if(
       service.prestations[0] && 
       service.prestations[0].date_suppression_admin == null &&
@@ -35,16 +33,23 @@ export default function Service(props) {
     return null;
   }
 
-  const paiement = () => {
-    Payment.prestation(prestation.id);
+  const terminee = async (event) => {
+    await prestationService.terminee(prestation.id);
+    setService(await serviceService.get(id));
   }
 
-  if(service == null) {
+  const setPrix = async (event) => {
+    const prix = document.getElementById("prix_prestataire").value;
+    await prestationService.setPrix(prestation.id, prix);
+    setService(await serviceService.get(id));
+  }
+
+  if(!service || !prestataires) {
     return <></>;
   }
 
   const prestation = getCurrentPrestation(service);
-
+  
   return (<>
     <div className="tableur">
       <div className='tab ajout'>
@@ -62,21 +67,16 @@ export default function Service(props) {
         <div className="cell slim200">1) Prix (Prestataire)</div>
         {
           prestation.statut > 1
-          ? <><div className="cell">{prestation.prix_prestataire} €&nbsp;&nbsp;&nbsp;&nbsp; Total {(prestation.prix_prestataire * 1.1).toFixed(2)} € &nbsp;&nbsp;&nbsp;&nbsp;(+10 %) </div></>
-          : <><div className="cell"><FontAwesomeIcon icon={all.faClockRotateLeft} /></div></>
+          ? <><div className="cell">{prestation.prix_prestataire} €</div></>
+          : <><div className="cell"><input type="text" id="prix_prestataire"/><button onClick={setPrix}> &nbsp;&nbsp;&nbsp;Proposer&nbsp;&nbsp;&nbsp; </button></div></>
         }
       </div>
       <div className="row">
         <div className="cell slim200">2) Paiement (Voyageur)</div>
         {
-          prestation.statut < 2
-          ? <div className="cell"><FontAwesomeIcon icon={all.faClockRotateLeft} /></div>
-          : (
-            prestation.statut == 2
-            ? <div className="cell cgreenc"><button onClick={paiement}> Regler le paiement </button> </div> 
-            : <div className="cell cgreenc"><FontAwesomeIcon icon={all.faCreditCard}/></div>
-          )
-          
+          prestation.statut > 2
+          ? <div className="cell cgreenc"><FontAwesomeIcon icon={all.faCreditCard}/></div>
+          : <div className="cell"><FontAwesomeIcon icon={all.faClockRotateLeft} /></div>
         }
       </div>
       <div className="row">
@@ -84,11 +84,15 @@ export default function Service(props) {
         {
           prestation.statut < 3
           ? <><div className="cell"><FontAwesomeIcon icon={all.faClockRotateLeft} /></div></>
-          : <><div className="cell"><FontAwesomeIcon icon={all.faCheck} /></div></>
+          : (
+            prestation.statut == 3
+            ? <><div className="cell"><button onClick={terminee}>Prestation terminée</button></div></>
+            : <><div className="cell">Prestation terminée</div></>
+          )
         }
       </div>
     </div>
-
+  
     <div className="tab-container">
       <div className="row header">
         <div className="cell center title">Service - Prestation</div>

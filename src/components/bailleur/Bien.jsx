@@ -60,6 +60,19 @@ export default function Biens(props) {
         <div className="cell"><input type="checkbox" defaultChecked={bien.date_suspension_bailleur !== null} onChange={suspension} title={bien.date_suspension_bailleur?.slice(0, 16).replace('T', ' ')} style={{display: bien.date_validation === null ? "none" : "initial"}}/></div>
       </div>
     </div>
+
+    <div className="tab-container admin">
+      <div className="row header">
+        <div className="cell center title">Disponibilité</div>
+      </div>
+      <div className="row">
+        <div className="cell slim200">Disponibilités</div>
+        <div className="cell">
+          <NavLink to={`/biens/${bien.id}/dispo`}><button> Verifier </button></NavLink>
+        </div>
+      </div>
+    </div>
+  
     <div className="tab-container">
       <div className="row header">
         <div className="cell center title">Bien immobilier</div>

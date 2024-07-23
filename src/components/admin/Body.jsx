@@ -15,6 +15,7 @@ import Voyageur from './Voyageur';
 import Voyageurs from './Voyageurs';
 import Messages from './Messages';
 import Langues from './Langues';
+import BienDispo from '../BienDispo';
 import Facturations from './Facturations';
 
 export default function Body(props) {
@@ -27,6 +28,7 @@ export default function Body(props) {
     <Route path='/messages' element={<Messages {...props}/>}/>
     <Route path='/biens' exact element={<Biens {...props}/>}/>
     <Route path='/biens/:id' element={<Bien {...props}/>}/>
+    <Route path='/biens/:id/dispo' exact element={<BienDispo {...props}/>}/>
     <Route path='/services' element={<Services {...props}/>}/>
     <Route path='/services/:id' element={<Service {...props}/>}/>
     <Route path='/bailleurs' exact element={<Bailleurs {...props}/>}/>

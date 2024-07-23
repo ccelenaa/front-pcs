@@ -96,6 +96,7 @@ return (<>
       <div className="cell">service</div>
       <div className="cell slim50">Max</div>
       <div className="cell slim120">Date</div>
+      <div className="cell slim120 center">Prestataire</div>
     </div>
     {
       services.filter(s=>s.statut==0).map((service) => {
@@ -103,7 +104,8 @@ return (<>
         <NavLink to={`/services/${service.id}`} className={"row service_"+service.id+""}>
             <div className="cell">{service.label}</div>
             <div className="cell slim50">{service.prix_max} €</div>
-            <div className="cell slim120">{service.date?.slice(0, 16).replace('T', ' ')}</div>
+              <div className="cell slim120">{service.date?.slice(0, 16).replace('T', ' ')}</div>
+              <div className="cell slim120 center"><FontAwesomeIcon icon={all.faClockRotateLeft} className="burger"/></div>
         </NavLink>
         </>
         }
@@ -117,32 +119,31 @@ return (<>
         <div className="row header">
           <div className="cell">service</div>
           <div className="cell slim50">Max</div>
-          <div className="cell slim50">Prix</div>
-          <div className="cell slim50">pay</div>
           <div className="cell slim120">Date</div>
           <div className="cell">Prestataire</div>
+          <div className="cell slim50">Prix</div>
+          <div className="cell slim50">pay</div>
         </div>
         {
-          services.filter(s=>s.statut>0 && s.statut<10).map((service) => {
-            const prestation = getCurrentPrestation(service);
-            const prix = prestation.prix_prestataire ? `${prestation.prix_prestataire} €` : <FontAwesomeIcon icon={all.faClockRotateLeft} className="burger" style={{}}/>;
-            const pay = prestation.statut == 3 ? <FontAwesomeIcon icon={all.faCreditCard} className="burger" style={{color: "green"}}/> : <FontAwesomeIcon icon={all.faClockRotateLeft} className="burger" style={{}}/>;
+            services.filter(s=>s.statut>0 && s.statut<10).map((service) => {
+              const prestation = getCurrentPrestation(service);
 
-            return <>
-              <NavLink to={`/services/${service.id}`} className={"row service_"+service.id+""}>
-                <div className="cell">{service.label}</div>
-                <div className="cell slim50">{service.prix_max} €</div>
-                <div className="cell slim50">{prix}</div>
-                <div className="cell slim50">{pay}</div>
-                <div className="cell slim120">{service.date?.slice(0, 16).replace('T', ' ')}</div>
-                <div className="cell">
-                  { prestation.prestataire ? <>{prestation.prestataire.nom}</> : <>-</> }
-                </div>
-              </NavLink>
-            </>
-            }
-          )
-        }
+              const prix = prestation.prix_prestataire ? `${prestation.prix_prestataire} €` : <FontAwesomeIcon icon={all.faClockRotateLeft} className="burger" style={{}}/>;
+              const pay = prestation.statut == 3 ? <FontAwesomeIcon icon={all.faCreditCard} className="burger" style={{color: "green"}}/> : <FontAwesomeIcon icon={all.faClockRotateLeft} className="burger" style={{}}/>;
+
+              return <>
+                <NavLink to={`/services/${service.id}`} className="row">
+                  <div className="cell">{service.label}</div>
+                  <div className="cell slim50">{service.prix_max} €</div>
+                  <div className="cell slim120">{service.date?.slice(0, 16).replace('T', ' ')}</div>
+                  <div className="cell">{ prestation.prestataire ? <>{prestation.prestataire.nom}</> : <>-</> }</div>
+                  <div className="cell slim50">{prix}</div>
+                  <div className="cell slim50">{pay}</div>
+                </NavLink>
+              </>
+              }
+            )
+          }
         </div>
       </>:
 
@@ -151,16 +152,15 @@ return (<>
         <div className="row header">
           <div className="cell">service</div>
           <div className="cell slim50">Max</div>
-          <div className="cell slim50">Prix</div>
-          <div className="cell slim50">pay</div>
           <div className="cell slim120">Date</div>
           <div className="cell">Prestataire</div>
+          <div className="cell slim50">Prix</div>
+          <div className="cell slim50">pay</div>
           <div className="cell slim80">Note</div>
         </div>
         {
           services.filter(s=>s.statut==10).map((service) => {
             const prestation = getCurrentPrestation(service);
-            console.log({Meow: prestation.id});
 
             const prix = prestation.prix_prestataire ? `${prestation.prix_prestataire} €` : <FontAwesomeIcon icon={all.faClockRotateLeft} className="burger" style={{}}/>;
             const pay = prestation.statut == 3 ? <FontAwesomeIcon icon={all.faCreditCard} className="burger" style={{color: "green"}}/> : <FontAwesomeIcon icon={all.faClockRotateLeft} className="burger" style={{}}/>;
@@ -169,12 +169,12 @@ return (<>
               <NavLink to={`/services/${service.id}`} className={"row service_"+service.id+""}>
                 <div className="cell">{service.label}</div>
                 <div className="cell slim50">{service.prix_max} €</div>
-                <div className="cell slim50">{prix}</div>
-                <div className="cell slim50">{pay}</div>
                 <div className="cell slim120">{service.date?.slice(0, 16).replace('T', ' ')}</div>
                 <div className="cell">
                   { prestation.prestataire ? <>{prestation.prestataire.nom}</> : <>-</> }
                 </div>
+                <div className="cell slim50">{prix}</div>
+                <div className="cell slim50">{pay}</div>
                 <div className="cell slim80">
                   <div style={{display: prestation ? 'inline': 'none'}} data-prestationid={prestation.id}  data-serviceid={service.id} onMouseLeave={mouseLeave}>
                   {

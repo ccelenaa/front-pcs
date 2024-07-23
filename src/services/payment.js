@@ -17,8 +17,7 @@ export default class Payment {
       `${API_URL}/payments/prestations/${id}`,
       {
         method: 'POST',
-        credentials: 'include',
-        body: JSON.stringify({date: new Date()})
+        credentials: 'include'
       });
     const session = await response.json();
 

@@ -2,14 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import bienService from '../../services/bien';
-import Payment from 'services/payment';
+import bienService from '../services/bien';
 import { useParams } from 'react-router-dom';
 import * as all from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Calendar from '../Calendar';
+import Calendar from './Calendar';
 
 export default function Dispo(props) {
+  
   const {id} = useParams();
 
   const [bien, setbien] = React.useState(null);

@@ -64,4 +64,47 @@ export default {
         });
     },
 
+    terminee: (id) => {
+        return axios({
+            method: 'post',
+            url: `${API_URL}/prestations/${id}/terminee`,
+            responseType: 'json',
+            withCredentials: true
+        }).then((response) => {
+            if(response.status === 200) {
+                const prestation = response.data;
+                notifier('success', `La prestation est terminée`);
+                return prestation;
+            }
+            return {};
+        }).catch(function (error) {
+            notifier('success', `Erreur ...`);
+            console.log({error})
+            return null;
+        });
+    },
+
+    setPrix: (id,prix_prestataire) => {
+        return axios({
+            method: 'post',
+            url: `${API_URL}/prestations/${id}/set/prix`,
+            responseType: 'json',
+            withCredentials: true,
+            data: {
+                prix_prestataire
+            }
+        }).then((response) => {
+            if(response.status === 200) {
+                const prestation = response.data;
+                notifier('success', `Affectation de prix`);
+                return prestation;
+            }
+            return {};
+        }).catch(function (error) {
+            notifier('error', `Erreur d'affectation de prix`);
+            console.log({error})
+            return null;
+        });
+    },
+
 }

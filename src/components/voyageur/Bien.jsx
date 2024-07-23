@@ -36,7 +36,7 @@ export default function Biens(props) {
       </div>
     </div>
 
-    <div className="tab-container location">
+    <div className="tab-container admin">
       <div className="row header">
         <div className="cell center title">Location</div>
       </div>
@@ -46,7 +46,12 @@ export default function Biens(props) {
           <input type="date" id="date_debut"/>
           <input type="date" id="date_fin"/>
           <button onClick={louer}>Louer</button>
-          <NavLink to={`/biens/${bien.id}/dispo`}><button>Dispo</button></NavLink>
+        </div>
+      </div>
+      <div className="row">
+        <div className="cell slim200">Disponibilités</div>
+        <div className="cell">
+          <NavLink to={`/biens/${bien.id}/dispo`}><button> Verifier </button></NavLink>
         </div>
       </div>
       <div className="row">

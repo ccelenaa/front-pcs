@@ -97,15 +97,7 @@ export default function AsideSetting(props) {
             label: 'Compte',
             icon: faUser
           },{
-            menu: '/messages',
-            label: 'Messages',
-            icon: all.faComment
-          },{
             menu: '/services',
-            label: 'Mes services',
-            icon: faHandshakeAngle
-          },{
-            menu: '/prestations',
             label: 'Mes prestations',
             icon: faHandshakeAngle
           },{
