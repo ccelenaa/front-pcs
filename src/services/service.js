@@ -1,15 +1,10 @@
-import axios from 'axios';
-import { API_URL } from '../Config';
+import api from 'services/requester';
 import { notifier } from 'components/Notifications';
 
 export default {
     gets: () => {
-        return axios({
-            method: 'get',
-            url: `${API_URL}/services?cache=${Math.random()}`,
-            responseType: 'json',
-            withCredentials: true,
-        }).then((response)=> response.status === 200 ? response.data : [])
+        return api.get(`/services?cache=${Math.random()}`)
+        .then((response)=> response.status === 200 ? response.data : [])
         .catch(function (error) {
             console.log({error});
             return [];
@@ -17,12 +12,8 @@ export default {
     },
 
     get: (id) => {
-        return axios({
-            method: 'get',
-            url: `${API_URL}/services/${id}?cache=${Math.random()}`,
-            responseType: 'json',
-            withCredentials: true,
-        }).then((response)=> response.status === 200 ? response.data : {})
+        return api.get(`/services/${id}?cache=${Math.random()}`)
+        .then((response)=> response.status === 200 ? response.data : {})
         .catch(function (error) {
             console.log({error})
             return {};
@@ -34,12 +25,8 @@ export default {
             return [];
         }
 
-        return axios({
-            method: 'get',
-            url: `${API_URL}/services/prestataire/${id_prestataire}?cache=${Math.random()}`,
-            responseType: 'json',
-            withCredentials: true,
-        }).then((response)=> response.status === 200 ? response.data : [])
+        return api.get(`/services/prestataire/${id_prestataire}?cache=${Math.random()}`)
+        .then((response)=> response.status === 200 ? response.data : [])
         .catch(function (error) {
             console.log({error})
             return [];
@@ -51,12 +38,8 @@ export default {
             return [];
         }
 
-        return axios({
-            method: 'get',
-            url: `${API_URL}/services/voyageur/${id_voyageur}?cache=${Math.random()}`,
-            responseType: 'json',
-            withCredentials: true,
-        }).then((response)=> response.status === 200 ? response.data : [])
+        return api.get(`/services/voyageur/${id_voyageur}?cache=${Math.random()}`)
+        .then((response)=> response.status === 200 ? response.data : [])
         .catch(function (error) {
             console.log({error})
             return [];
@@ -64,15 +47,8 @@ export default {
     },
 
     setPrestataire: (id, id_prestataire) => {
-        return axios({
-            method: 'post',
-            url: `${API_URL}/services/${id}/set/prestataire`,
-            responseType: 'json',
-            withCredentials: true,
-            data: {
-                id_prestataire
-            }
-        }).then((response) => {
+        return api.post(`/services/${id}/set/prestataire`,{id_prestataire})
+        .then((response) => {
             if(response.status >= 200 && response.status < 300) {
                 if(id_prestataire > 0) {
                     notifier('success', `Prestation affecté au Prestataire`);
@@ -89,16 +65,8 @@ export default {
     },
 
     addService: (formData) => {
-        return axios({
-            method: 'post',
-            url: `${API_URL}/services/ajout`,
-            responseType: 'json',
-            withCredentials: true,
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-            data: formData
-        }).then((response) => {
+        return api.post(`/services/ajout`,formData)
+        .then((response) => {
             if(response.status >= 200 && response.status < 300) {
                 notifier('success', `Demande crée avec succes`);
                 return true;

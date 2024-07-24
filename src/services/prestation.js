@@ -1,15 +1,10 @@
-import axios from 'axios';
-import { API_URL } from '../Config';
+import api from 'services/requester';
 import {notifier} from '../components/Notifications';
 
 export default {
     gets: () => {
-        return axios({
-            method: 'get',
-            url: `${API_URL}/prestations?cache=${Math.random()}`,
-            responseType: 'json',
-            withCredentials: true,
-        }).then((response) => response.status === 200 ? response.data : [])
+        return api.get(`/prestations?cache=${Math.random()}`)
+        .then((response) => response.status === 200 ? response.data : [])
         .catch(function (error) {
             console.log({error});
             return [];
@@ -17,12 +12,8 @@ export default {
     },
 
     parVoyageur: (id_voyageur) => {
-        return axios({
-            method: 'get',
-            url: `${API_URL}/prestations/voyageur/${id_voyageur}?cache=${Math.random()}`,
-            responseType: 'json',
-            withCredentials: true,
-        }).then((response) => response.status === 200 ? response.data : [])
+        return api.get(`/prestations/voyageur/${id_voyageur}?cache=${Math.random()}`)
+        .then((response) => response.status === 200 ? response.data : [])
         .catch(function (error) {
             console.log({error});
             return [];
@@ -30,12 +21,8 @@ export default {
     },
 
     get: (id) => {
-        return axios({
-            method: 'get',
-            url: `${API_URL}/prestations/${id}`,
-            responseType: 'json',
-            withCredentials: true,
-        }).then((response) => response.status === 200 ? response.data : {})
+        return api.get(`/prestations/${id}`)
+        .then((response) => response.status === 200 ? response.data : {})
         .catch(function (error) {
             console.log({error})
             return null;
@@ -43,15 +30,8 @@ export default {
     },
 
     setNote: (id,note) => {
-        return axios({
-            method: 'post',
-            url: `${API_URL}/prestations/${id}/set/note`,
-            responseType: 'json',
-            withCredentials: true,
-            data: {
-                note
-            }
-        }).then((response) => {
+        return api.post(`/prestations/${id}/set/note`,{note})
+        .then((response) => {
             if(response.status === 200) {
                 const prestation = response.data;
                 notifier('note', `+${prestation.note} pour ${prestation.prestataire.nom}`);
@@ -65,12 +45,8 @@ export default {
     },
 
     terminee: (id) => {
-        return axios({
-            method: 'post',
-            url: `${API_URL}/prestations/${id}/terminee`,
-            responseType: 'json',
-            withCredentials: true
-        }).then((response) => {
+        return api.post(`/prestations/${id}/terminee`)
+        .then((response) => {
             if(response.status === 200) {
                 const prestation = response.data;
                 notifier('success', `La prestation est terminée`);
@@ -85,15 +61,8 @@ export default {
     },
 
     setPrix: (id,prix_prestataire) => {
-        return axios({
-            method: 'post',
-            url: `${API_URL}/prestations/${id}/set/prix`,
-            responseType: 'json',
-            withCredentials: true,
-            data: {
-                prix_prestataire
-            }
-        }).then((response) => {
+        return api.post(`/prestations/${id}/set/prix`,{prix_prestataire})
+        .then((response) => {
             if(response.status === 200) {
                 const prestation = response.data;
                 notifier('success', `Affectation de prix`);

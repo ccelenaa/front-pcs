@@ -1,18 +1,30 @@
 import axios from 'axios';
-import { API_URL } from './../../config';
+import NProgress from 'nprogress';
+import { API_URL as baseURL } from './../Config';
 
 axios.defaults.withCredentials = true;
 
-// Create a custom axios instance
-const api = axios.create({
-  baseURL: API_URL,
+const axiosInstance = axios.create({
+  baseURL,
   responseType: 'json',
   timeout: 10000,
-  // withCredentials: true,
-  headers: {
-      'X-Requested-With': 'XMLHttpRequest',
-      'Content-Type': 'application/json'
-  }
+  withCredentials: true
 });
 
-export default api;
+axiosInstance.interceptors.request.use((config) => {
+  NProgress.start();
+  return config;
+}, (error) => {
+  NProgress.done();
+  return Promise.reject(error);
+});
+
+axiosInstance.interceptors.response.use((response) => {
+  NProgress.done();
+  return response;
+}, (error) => {
+  NProgress.done();
+  return Promise.reject(error);
+});
+
+export default axiosInstance;
