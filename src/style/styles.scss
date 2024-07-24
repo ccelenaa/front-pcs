@@ -557,6 +557,7 @@ div {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  margin-bottom: 100px;
 }
 
 .month {
@@ -566,6 +567,7 @@ div {
 
 .month h4 {
   text-align: center;
+  margin: 5px;
 }
 
 .weekdays, .days {
