@@ -23,8 +23,7 @@ function generateDaysOfYear(year) {
   return days;
 }
 
-const Calendar = ({ availabilities }) => {
-  const year = new Date().getFullYear();
+const Calendar = ({ availabilities, year }) => {
   const daysOfYear = generateDaysOfYear(year);
   const availabilityMap = {};
 

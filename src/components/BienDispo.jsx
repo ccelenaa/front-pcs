@@ -9,7 +9,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Calendar from './Calendar';
 
 export default function Dispo(props) {
-  
+  const currentYear = new Date().getFullYear();
+  const [selectedYear, setSelectedYear] = useState(currentYear);
+  const years = Array.from({ length: 3 }, (_, index) => currentYear + index);
+
   const {id} = useParams();
 
   const [bien, setbien] = React.useState(null);
@@ -17,6 +20,10 @@ export default function Dispo(props) {
   React.useEffect(async () => {
     setbien(await bienService.get(id));
   }, []);
+
+  const yearChange = (event) => {
+    setSelectedYear(+document.getElementById('year-select').value);
+  }
 
   if(!bien) {
     return <></>
@@ -29,8 +36,18 @@ export default function Dispo(props) {
           <FontAwesomeIcon icon={all.faArrowLeft} />
         </NavLink>
       </div>
+      <div className='tab1' style={{display: 'flex', alignItems: 'center', width: '200px'}}>
+        <select id="year-select" onChange={yearChange} style={{width: '100%'}}>
+          {years.map((year) => (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
 
-    <Calendar availabilities={bien.locations} />
+
+    <Calendar availabilities={bien.locations} year={selectedYear}/>
   </>)
 }
