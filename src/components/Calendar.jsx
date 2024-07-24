@@ -62,7 +62,7 @@ const Calendar = ({ availabilities, year }) => {
 
         return (
           <div key={index} className="month">
-            <h4>{new Date(year, index).toLocaleString('default', { month: 'long' })}</h4>
+            <h5>{new Date(year, index).toLocaleString('default', { month: 'long' })}</h5>
             <div className="weekdays">
               {weekdays.map(day => (
                 <div key={day} className="weekday">

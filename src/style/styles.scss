@@ -561,11 +561,11 @@ div {
 }
 
 .month {
-  width: 280px; /* Adjust this width as needed */
+  width: 210px; /* Adjust this width as needed */
   margin: 5px;
 }
 
-.month h4 {
+.month h5 {
   text-align: center;
   margin: 5px;
 }
@@ -576,12 +576,12 @@ div {
 }
 
 .weekday, .day {
-  width: 35px;
-  height: 35px;
+  width: 29px;
+  height: 29px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 2px;
+  margin: 1px 1px 0 0;
   border: 0px solid #ccc;
   box-sizing: border-box;
   border-radius: 4px;
