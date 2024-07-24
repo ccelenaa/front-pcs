@@ -1,6 +1,5 @@
-import axios from 'axios';
-import { API_URL } from '../Config';
-import {notifier} from '../components/Notifications'
+import api from 'services/requester'
+import {notifier} from 'components/Notifications'
 
 export function setConnexion(connected) {
     var [html] = document.getElementsByTagName('html');
@@ -13,12 +12,7 @@ export function setConnexion(connected) {
 }
 
 function getUser(event) {
-    return axios({
-        method: 'get',
-        url: `${API_URL}/comptes/moi`,
-        responseType: 'json',
-        withCredentials: true
-    });
+    return api.get(`/comptes/moi`);
 }
 
 export function isConnected() {
@@ -32,13 +26,8 @@ export function getUserData(event) {
 }
 
 export function login(data) {
-    axios({
-        method: 'post',
-        url: `${API_URL}/auth/signin`,
-        responseType: 'json',
-        data,
-        withCredentials: true
-    }).then(function (response) {
+    return api.post(`/auth/signin`,data)
+    .then(function (response) {
         if (200 <= response.status < 400) {
             isConnected().then((res) => {
                 if (200 <= res.status < 400) {
@@ -55,12 +44,8 @@ export function login(data) {
 }
 
 export function logout(event) {
-    return axios({
-        method: 'post',
-        url: `${API_URL}/auth/signout`,
-        responseType: 'json',
-        withCredentials: true
-    }).then(function (response) {
+    return api.post(`/auth/signout`)
+    .then(function (response) {
         window.location.reload(true);
     }).catch(console.log);
 }

@@ -1,20 +1,10 @@
-import axios from 'axios';
-import { API_URL } from '../Config';
+import api from 'services/requester'
 import { notifier } from 'components/Notifications';
 
 export default {
     get: (id) => {
-        return axios({
-            method: 'get',
-            url: `${API_URL}/prestataires/${id}?cache=${Math.random()}`,
-            responseType: 'json',
-            withCredentials: true,
-            // headers: {
-            //     'Cache-Control': 'no-cache',
-            //     'Pragma': 'no-cache',
-            //     'Expires': '0',
-            // }
-        }).then((response) => response.status === 200 ? response.data : [])
+        return api.get(`/prestataires/${id}?cache=${Math.random()}`)
+        .then((response) => response.status === 200 ? response.data : [])
         .catch(function (error) {
             console.log({error})
             return null;
@@ -22,17 +12,8 @@ export default {
     },
 
     gets: (event) => {
-        return axios({
-            method: 'get',
-            url: `${API_URL}/prestataires?cache=${Math.random()}`,
-            responseType: 'json',
-            withCredentials: true,
-            // headers: {
-            //     'Cache-Control': 'no-cache',
-            //     'Pragma': 'no-cache',
-            //     'Expires': '0',
-            // }
-        }).then((response) => response.status === 200 ? response.data : [])
+        return api.get(`/prestataires?cache=${Math.random()}`)
+        .then((response) => response.status === 200 ? response.data : [])
         .catch(function (error) {
             console.log({error})
             return null;
@@ -40,15 +21,8 @@ export default {
     },
 
     valider: (id, valider) => {
-        return axios({
-            method: 'post',
-            url: `${API_URL}/prestataires/validation/${id}`,
-            responseType: 'json',
-            withCredentials: true,
-            data: {
-                valider
-            }
-        }).then((response) => {
+        return api.post(`/prestataires/validation/${id}`,{valider})
+        .then((response) => {
             if(response.status >= 200 && response.status < 300) {
                 notifier('success', `Prestataire ${valider?'validé':'invalidé'}`);
                 return response.data;
@@ -61,15 +35,8 @@ export default {
     },
 
     suspendre: (id, suspendre) => {
-        return axios({
-            method: 'post',
-            url: `${API_URL}/prestataires/suspenssion/${id}`,
-            responseType: 'json',
-            withCredentials: true,
-            data: {
-                suspendre
-            }
-        }).then((response) => {
+        return api.post(`/prestataires/suspenssion/${id}`,{suspendre})
+        .then((response) => {
             if(response.status >= 200 && response.status < 300) {
                 notifier('success', `Prestataire ${suspendre?'suspendu':'réintégré'}`);
                 return response.data;

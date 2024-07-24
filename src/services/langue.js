@@ -1,14 +1,9 @@
-import axios from 'axios';
-import { API_URL } from '../Config';
+import api from 'services/requester';
 
 export default {
     gets: (event) => {
-        return axios({
-            method: 'get',
-            url: `${API_URL}/langues?cache=${Math.random()}`,
-            responseType: 'json',
-            withCredentials: true,
-        }).then((response) => {
+        return api.get(`/langues?cache=${Math.random()}`)
+        .then((response) => {
             if(response.status === 200) {
                 return response.data;
             }

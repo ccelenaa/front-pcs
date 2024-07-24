@@ -1,25 +1,13 @@
-import { API_URL } from '../Config';
+import api from 'services/requester';
 
 export default class Facturation {
   static prestations = async () => {
-    return await fetch(
-      `${API_URL}/facturations/prestataires`,
-      {
-        method: 'get',
-        credentials: 'include',
-      }).then(res => {
-        return res.json();
-      });
+    return api.get(`/facturations/prestataires`)
+    .then(res => res.data);
   }
 
   static nexts = async () => {
-    return await fetch(
-      `${API_URL}/facturations/prestataires/next`,
-      {
-        method: 'get',
-        credentials: 'include',
-      }).then(res => {
-        return res.json();
-      });
+    return api.get(`/facturations/prestataires/next`)
+    .then(res => res.data);
   }
 }

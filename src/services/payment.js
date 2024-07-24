@@ -1,7 +1,6 @@
 
 import { loadStripe } from '@stripe/stripe-js';
-import { API_URL } from '../Config';
-import axios from 'axios';
+import api from 'services/requester';
 import { notifier } from 'components/Notifications';
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -13,13 +12,7 @@ export default class Payment {
     const stripe = await stripePromise;
 
     // Call your backend to create the Checkout Session
-    const response = await fetch(
-      `${API_URL}/payments/prestations/${id}`,
-      {
-        method: 'POST',
-        credentials: 'include'
-      });
-    const session = await response.json();
+    const session = await api.post(`/payments/prestations/${id}`).then(r=r.data);
 
     if (stripe) {
       const result = await stripe.redirectToCheckout({
@@ -39,16 +32,8 @@ export default class Payment {
   static location = async (id, date_debut, date_fin) => {
     const stripe = await stripePromise;    
     if (stripe) {
-      const session = await axios({
-        method: 'post',
-        url: `${API_URL}/payments/locations/${id}`,
-        responseType: 'json',
-        withCredentials: true,
-        data: {
-          date_debut,
-          date_fin
-        }
-      }).then((response) => {
+      const session = await api.post(`/payments/locations/${id}`,{date_debut,date_fin})
+      .then((response) => {
         if(response.status >= 200 && response.status < 300) {
             return response.data;
         }
@@ -90,35 +75,21 @@ export default class Payment {
   };
 
   static updatePayment = async (session) => {
-    return await fetch(
-      `${API_URL}/payments/${session}/update`,
-      {
-        method: 'get',
-        credentials: 'include',
-      });
-      // .then(res => {
-      //   return res.json();
-      // });
+    return api.get(`/payments/${session}/update`);
   };
 
   static voyageurTransactions = async () => {
-    return await fetch(
-      `${API_URL}/voyageurs/1/transactions`,
-      {
-        method: 'get',
-        credentials: 'include',
-      }).then(res => {
-        return res.json();
-      });
+    return api.get(`/voyageurs/transactions`)
+    .then(res => res.data);
   };
 
-  static download_receipt = async (file) => {
-    return await fetch(
-      `${API_URL}/payments/receipts/${file}`,
-      {
-        method: 'get',
-        credentials: 'include',
-      });
-  };
+  // static download_receipt = async (file) => {
+  //   return await fetch(
+  //     `${API_URL}/payments/receipts/${file}`,
+  //     {
+  //       method: 'get',
+  //       credentials: 'include',
+  //     });
+  // };
 
 }

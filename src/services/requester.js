@@ -7,7 +7,7 @@ axios.defaults.withCredentials = true;
 const axiosInstance = axios.create({
   baseURL,
   responseType: 'json',
-  timeout: 10000,
+  timeout: 30000,
   withCredentials: true
 });
 
