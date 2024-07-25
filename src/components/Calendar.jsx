@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 // Helper function to format Date objects into strings
 function formatDate(date) {
@@ -28,7 +29,7 @@ const Calendar = ({ availabilities, year }) => {
   const availabilityMap = {};
 
   // Mark availability in a map
-  availabilities.forEach(({ date_debut, date_fin }) => {
+  availabilities.forEach(({ voyageur, date_debut, date_fin }) => {
     let start = parseDate(date_debut);
     let end = parseDate(date_fin);
 
@@ -37,7 +38,7 @@ const Calendar = ({ availabilities, year }) => {
     end.setHours(23, 59, 59, 999);
 
     for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-      availabilityMap[formatDate(d)] = true;
+      availabilityMap[formatDate(d)] = voyageur;
     }
   });
 
@@ -78,13 +79,27 @@ const Calendar = ({ availabilities, year }) => {
                 const formattedDate = formatDate(day);
                 const isAvailable = availabilityMap[formattedDate] || false;
                 return (
+                  isAvailable
+                  ? <>
+                    <NavLink to={`/voyageurs/${isAvailable.id}`}>
+                      <div
+                        key={formattedDate}
+                        className={`day available`}
+                        title={isAvailable.nom}
+                      >
+                        {day.getDate()}
+                      </div>
+                    </NavLink>
+                  </>
+                  : <>
                   <div
                     key={formattedDate}
-                    className={`day ${isAvailable ? 'available' : 'unavailable'}`}
+                    className={`day unavailable`}
                     title={formattedDate}
                   >
                     {day.getDate()}
                   </div>
+                </>
                 );
               })}
             </div>

@@ -11,7 +11,7 @@ import Calendar from './Calendar';
 export default function Dispo(props) {
   const currentYear = new Date().getFullYear();
   const [selectedYear, setSelectedYear] = useState(currentYear);
-  const years = Array.from({ length: 3 }, (_, index) => currentYear + index);
+  const years = Array.from({ length: 4 }, (_, index) => currentYear - 1 + index);
 
   const {id} = useParams();
 
@@ -26,7 +26,8 @@ export default function Dispo(props) {
   }, []);
 
   const yearChange = (event) => {
-    setSelectedYear(+document.getElementById('year-select').value);
+    const year = event.currentTarget.dataset.year;
+    setSelectedYear(year);
   }
 
   if(!bien) {
@@ -40,18 +41,16 @@ export default function Dispo(props) {
           <FontAwesomeIcon icon={all.faArrowLeft} />
         </NavLink>
       </div>
-      <div className='tab1' style={{display: 'flex', alignItems: 'center', width: '200px'}}>
-        <select id="year-select" onChange={yearChange} style={{width: '100%'}}>
-          {years.map((year) => (
-            <option key={year} value={year}>
-              {year}
-            </option>
-          ))}
-        </select>
-      </div>
+      {years.map((year) => (
+        <div className={`tab${year==selectedYear ? " selected" : ""}`} data-year={year} onClick={yearChange} style={{}}>
+          {year}
+        </div>
+      ))}      
+
     </div>
-
-
+    {
+      console.log({locations: bien.locations})
+    }
     <Calendar availabilities={bien.locations} year={selectedYear}/>
   </>)
 }
