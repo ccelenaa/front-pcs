@@ -1,12 +1,9 @@
 
 
-import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState } from 'react';
 import bienService from '../services/bien';
 import { useParams } from 'react-router-dom';
-import * as all from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Calendar from './Calendar';
+import Calendar from './widgets/Calendar';
 import BackLink from './widgets/BackLink';
 
 export default function Dispo(props) {

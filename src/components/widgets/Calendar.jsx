@@ -14,11 +14,13 @@ function parseDate(dateStr) {
 // Generate all days of the year
 function generateDaysOfYear(year) {
   const days = [];
+  // const startOfYear = new Date(`${year}-01-01`);
+  // const endOfYear = new Date(`${year}-12-31`);
   const startOfYear = new Date(year, 0, 1);
   const endOfYear = new Date(year, 11, 31);
 
   for (let d = new Date(startOfYear); d <= endOfYear; d.setDate(d.getDate() + 1)) {
-    days.push(new Date(d));
+    days.push(new Date(d.setHours(12, 0, 0, 0)));
   }
 
   return days;
@@ -33,10 +35,11 @@ const Calendar = ({ availabilities, year }) => {
     let start = parseDate(date_debut);
     let end = parseDate(date_fin);
 
+    console.log({v:1, start})
     // Adjust for full-day dates
-    start.setHours(0, 0, 0, 0);
-    end.setHours(23, 59, 59, 999);
-
+    // start.setHours(0, 0, 0, 0);
+    // end.setHours(23, 59, 59, 999);
+    
     for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
       availabilityMap[formatDate(d)] = voyageur;
     }
@@ -82,26 +85,8 @@ const Calendar = ({ availabilities, year }) => {
                 const past = formattedDate < today ? 'past' : '';
                 return (
                   isAvailable
-                  ? <>
-                    <NavLink to={`/voyageurs/${isAvailable.id}`}>
-                      <div
-                        key={formattedDate}
-                        className={`day available ${past}`}
-                        title={isAvailable.nom}
-                      >
-                        {day.getDate()}
-                      </div>
-                    </NavLink>
-                  </>
-                  : <>
-                  <div
-                    key={formattedDate}
-                    className={`day unavailable ${past}`}
-                    title={formattedDate}
-                  >
-                    {day.getDate()}
-                  </div>
-                </>
+                  ? <><NavLink to={`/voyageurs/${isAvailable.id}`}><div key={formattedDate} className={`day available ${past}`} title={isAvailable.nom}>{day.getDate()}</div></NavLink></>
+                  : <><div key={formattedDate} className={`day unavailable ${past}`} title={formattedDate}>{day.getDate()}</div></>
                 );
               })}
             </div>
