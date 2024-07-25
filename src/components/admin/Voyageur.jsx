@@ -5,6 +5,7 @@ import Payment from 'services/payment';
 import { useParams } from 'react-router-dom';
 import * as all from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BackLink from 'components/widgets/BackLink';
 
 export default function Voyageur(props) {
   const {id} = useParams();
@@ -38,9 +39,7 @@ export default function Voyageur(props) {
   return (<>
     <div className="tableur">
       <div className='tab ajout'>
-        <NavLink to="/voyageurs" className="" style={{borderRadius: "50px", padding: "4px 10px", height: "100%"}}>
-          <FontAwesomeIcon icon={all.faArrowLeft} />
-        </NavLink>
+        <BackLink backlink="/voyageurs"/>
       </div>
     </div>
 

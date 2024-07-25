@@ -4,6 +4,7 @@ import { BrowserRouter as Router, useLocation} from 'react-router-dom';
 import {setConnexion, isConnected} from './services/user';
 import ProgressBar from 'components/ProgressBar';
 import Notifications from 'components/Notifications';
+import { Navigator } from 'components/widgets/Navigator';
 
 function App() {
   isConnected(null).then((response) => {
@@ -20,7 +21,9 @@ function App() {
     <div class="global-container size1280">
       <ProgressBar/>
       <Router>
-        <Organization/>
+        <Navigator>
+          <Organization/>
+        </Navigator>
       </Router>
     </div>
     </>

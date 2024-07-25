@@ -1,9 +1,6 @@
 
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { setConnexion, isConnected } from './../../services/user';
-import { API_URL } from './../../Config';
-import { Link, NavLink, Route, Routes, BrowserRouter as Router, useLocation, Switch } from 'react-router-dom';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import Bien from './Bien';
 import Biens from './Biens';
 import BienDispo from '../BienDispo';
@@ -13,6 +10,7 @@ import Compte from './Compte';
 import Message from './Message';
 import Login from 'components/login/Login';
 import AjoutBien from './AjoutBien';
+import Locations from './Locations';
 
 export default function Body(props) {
 
@@ -26,6 +24,7 @@ export default function Body(props) {
     <Route path='/biens/:id/dispo' exact element={<BienDispo {...props}/>}/>
     <Route path='/biens' exact element={<Biens {...props}/>}/>
     <Route path='/biens/ajout' exact element={<AjoutBien {...props}/>}/>
+    <Route path='/locations' element={<Locations {...props}/>}/>
     <Route path='/prestations' element={<Prestation {...props}/>}/>
     <Route path='/factures' element={<Facture {...props}/>}/>
   </Routes>

@@ -5,6 +5,7 @@ import Payment from 'services/payment';
 import { useParams } from 'react-router-dom';
 import * as all from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BackLink from 'components/widgets/BackLink';
 
 export default function Bailleur(props) {
   const {id} = useParams();
@@ -37,9 +38,7 @@ export default function Bailleur(props) {
   return (<>
     <div className="tableur">
       <div className='tab ajout'>
-        <NavLink to="/bailleurs" className="" style={{borderRadius: "50px", padding: "4px 10px", height: "100%"}}>
-          <FontAwesomeIcon icon={all.faArrowLeft} />
-        </NavLink>
+        <BackLink backlink="/bailleurs"/>
       </div>
     </div>
 

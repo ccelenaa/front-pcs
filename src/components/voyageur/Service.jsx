@@ -1,12 +1,10 @@
-
-
-import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React from 'react';
 import serviceService from '../../services/service';
 import Payment from 'services/payment';
 import { useParams } from 'react-router-dom';
 import * as all from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BackLink from 'components/widgets/BackLink';
 
 export default function Service(props) {
   const {id} = useParams();
@@ -20,10 +18,6 @@ export default function Service(props) {
   React.useEffect(() => {
     init()
   }, []);
-
-  const louer = () => {
-    Payment.location(id);
-  }
 
   const getCurrentPrestation = (service) => {
     console.log(service)
@@ -52,9 +46,7 @@ export default function Service(props) {
   return (<>
     <div className="tableur">
       <div className='tab ajout'>
-        <NavLink to="/services" className="" style={{borderRadius: "50px", padding: "4px 10px", height: "100%"}}>
-          <FontAwesomeIcon icon={all.faArrowLeft} />
-        </NavLink>
+        <BackLink backlink="/services"/>
       </div>
     </div>
 

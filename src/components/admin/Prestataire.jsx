@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React from 'react';
 import prestataireService from '../../services/prestataire';
-import Payment from 'services/payment';
 import { useParams } from 'react-router-dom';
 import * as all from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BackLink from 'components/widgets/BackLink';
 
 export default function Prestataire(props) {
   const {id} = useParams();
@@ -38,9 +37,7 @@ export default function Prestataire(props) {
   return (<>
     <div className="tableur">
       <div className='tab ajout'>
-        <NavLink to="/prestataires" className="" style={{borderRadius: "50px", padding: "4px 10px", height: "100%"}}>
-          <FontAwesomeIcon icon={all.faArrowLeft} />
-        </NavLink>
+        <BackLink backlink="/prestataires"/>
       </div>
     </div>
 
