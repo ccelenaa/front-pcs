@@ -609,11 +609,17 @@ div {
 .day.unavailable {
   background-color: rgb(67, 167, 112);
   color: white;
+  &.past {
+    background-color: rgb(139, 187, 161);
+  }
 }
 
 .day.available {
   background-color: rgb(207, 95, 75);
   color: white;
+  &.past {
+    background-color: rgb(202, 128, 115);
+  }
 }
 
 .day.empty {

@@ -54,6 +54,7 @@ const Calendar = ({ availabilities, year }) => {
   });
 
   const weekdays = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+  const today = new Date().toISOString().split('T')[0];
 
   return (
     <div className="calendar">
@@ -78,13 +79,14 @@ const Calendar = ({ availabilities, year }) => {
               {monthDays.map(day => {
                 const formattedDate = formatDate(day);
                 const isAvailable = availabilityMap[formattedDate] || false;
+                const past = formattedDate < today ? 'past' : '';
                 return (
                   isAvailable
                   ? <>
                     <NavLink to={`/voyageurs/${isAvailable.id}`}>
                       <div
                         key={formattedDate}
-                        className={`day available`}
+                        className={`day available ${past}`}
                         title={isAvailable.nom}
                       >
                         {day.getDate()}
@@ -94,7 +96,7 @@ const Calendar = ({ availabilities, year }) => {
                   : <>
                   <div
                     key={formattedDate}
-                    className={`day unavailable`}
+                    className={`day unavailable ${past}`}
                     title={formattedDate}
                   >
                     {day.getDate()}
