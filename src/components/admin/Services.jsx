@@ -14,8 +14,12 @@ export default function Services(props) {
     setServices(await serviceService.gets());
   }
 
-  React.useEffect(async () => {
+  const init = async () => {
     await getData();
+  }
+
+  React.useEffect(() => {
+    init()
   },[]);
 
   const getCurrentPrestation = (service) => {

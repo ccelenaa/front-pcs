@@ -26,13 +26,17 @@ export default function Facturations(props) {
     });
   }, []);
 
-  React.useEffect(async () => {
+  const init = async () => {
     const data = await Facturation.nexts();
     setMinutor(data.rest * 100 / data.interval);
     setNext(data);
 
     const intervalId = setInterval(update, 1000);
     return () => clearInterval(intervalId);
+  }
+
+  React.useEffect(() => {
+    init()
   }, []);
 
 

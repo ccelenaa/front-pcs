@@ -11,8 +11,12 @@ export default function Voyageur(props) {
 
   const [voyageur, setVoyageur] = React.useState(null);
 
-  React.useEffect(async () => {
+  const init = async () => {
     setVoyageur(await voyageurService.get(id));
+  }
+
+  React.useEffect(() => {
+    init()
   }, []);
 
   const validation = (event) => {

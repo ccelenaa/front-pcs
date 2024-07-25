@@ -13,8 +13,12 @@ export default function Biens(props) {
 
   const [bien, setbien] = React.useState(null);
 
-  React.useEffect(async () => {
+  const init = async () => {
     setbien(await bienService.get(id));
+  }
+
+  React.useEffect(() => {
+    init()
   }, []);
   
   const suspension = (event) => {

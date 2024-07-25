@@ -13,8 +13,8 @@ export default function Prestations({account}) {
     setServices(await serviceService.gets());
   }
 
-  React.useEffect(async () => {
-    await getData();
+  React.useEffect(() => {
+    getData();
   },[]);
 
   const getCurrentPrestation = (service) => {

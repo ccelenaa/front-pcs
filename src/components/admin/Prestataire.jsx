@@ -10,9 +10,12 @@ export default function Prestataire(props) {
   const {id} = useParams();
 
   const [prestataire, setPrestataire] = React.useState(null);
-
-  React.useEffect(async () => {
+  const init = async () => {
     setPrestataire(await prestataireService.get(id));
+  }
+
+  React.useEffect(() => {
+    init();
   }, []);
 
 

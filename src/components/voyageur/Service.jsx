@@ -13,8 +13,12 @@ export default function Service(props) {
 
   const [service, setService] = React.useState(null);
 
-  React.useEffect(async () => {
+  const init = async () => {
     setService(await serviceService.get(id));
+  }
+
+  React.useEffect(() => {
+    init()
   }, []);
 
   const louer = () => {

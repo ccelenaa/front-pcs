@@ -17,8 +17,12 @@ export default function Dispo(props) {
 
   const [bien, setbien] = React.useState(null);
 
-  React.useEffect(async () => {
+  const setB = async () => {
     setbien(await bienService.get(id));
+  };
+
+  React.useEffect(() => {
+    setB();
   }, []);
 
   const yearChange = (event) => {

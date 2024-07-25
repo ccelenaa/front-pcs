@@ -15,9 +15,13 @@ export default function Prestation(props) {
   const [service, setService] = React.useState(null);
   const [prestataires, setPrestataires] = React.useState(null);
 
-  React.useEffect(async () => {
+  const init = async () => {
     setService(await serviceService.get(id));
     setPrestataires(await prestataireService.gets());
+  }
+
+  React.useEffect(() => {
+    init();
   }, []);
 
   const getCurrentPrestation = (service) => {

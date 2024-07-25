@@ -8,8 +8,12 @@ export default function Paiements(props) {
 
   const [transctions, setTransctions] = React.useState([]);
 
-  React.useEffect(async () => {
+  const init = async () => {
     setTransctions(await Payment.voyageurTransactions());
+  }
+
+  React.useEffect(() => {
+   init();
   },[]);
 
   const download = async (event) => {

@@ -18,7 +18,7 @@ function Organization() {
   const searchParams = new URLSearchParams(search);
   const success = searchParams.get("success");
 
-  useEffect(async () => {
+  const effect1 = async () => {
     if(success) {
       const response = await Payment.updatePayment(success);
       if(response.status === 200) {
@@ -28,6 +28,10 @@ function Organization() {
       }
         
     }
+  }
+
+  useEffect(() => {
+    effect1();
   }, []);
 
   const { i18n, t } = useTranslation();
@@ -141,8 +145,8 @@ function Organization() {
 
   var [user, setUser] = useState(undefined);
   var [langues, setLangues] = useState([]);
-  
-  useEffect(async () => {
+
+  const effect2 = async () => {
 
     const userApi = await getUserData();
     const languesBd = await langueService.gets();
@@ -153,7 +157,10 @@ function Organization() {
 
     setUser(userApi);
     setLangues(languesBd);
+  }
 
+  useEffect(() => {
+    effect2()
   }, []);
 
   return user !== undefined ?
@@ -163,7 +170,6 @@ function Organization() {
       <Header organization={organization.organization} langues={langues}/>
       <Body organization={organization.organization} account={user} langues={langues}/>
       <Footer organization={organization.organization} langues={langues}/>
-      <Notifications/>
     </>
   ) :
   (

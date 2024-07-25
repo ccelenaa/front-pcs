@@ -70,6 +70,23 @@ $theme: 'white';
   background-size: cover;
   background-position: center;
 } */
+
+html {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  scrollbar-width: none;
+  display: block;
+  font-family: Camphor, Open Sans, Segoe UI, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--text-color);
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -77,6 +94,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   position: relative;
   height: 100%;
+  overflow: hidden;
   margin: 0;
   padding: 0;
   scrollbar-width: none;
@@ -92,6 +110,16 @@ body {
   background-color: var(--head-background);
 }
 
+#app {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+.global-container {
+  position: relative;
+  overflow-y: auto;
+  height: 100%;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
@@ -111,7 +139,7 @@ code {
 #app {
   height: 100%;
 
-  >div {
+  .global-container {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -120,21 +148,6 @@ code {
 
 input[type=checkbox]:enabled {
   cursor: pointer;
-}
-
-html {
-  position: relative;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  scrollbar-width: none;
-  display: block;
-  font-family: Camphor, Open Sans, Segoe UI, sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: var(--text-color);
 }
 
 a {
@@ -273,8 +286,8 @@ select {
 .notificationBox {
   position: absolute;
   right: 40px;
-  bottom: 80px;
-  // top: 70px;
+  bottom: 60px;
+  z-index: 1000;
 }
 
 .notification {

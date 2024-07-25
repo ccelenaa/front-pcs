@@ -3,6 +3,7 @@ import Organization from './components/Organization';
 import { BrowserRouter as Router, useLocation} from 'react-router-dom';
 import {setConnexion, isConnected} from './services/user';
 import ProgressBar from 'components/ProgressBar';
+import Notifications from 'components/Notifications';
 
 function App() {
   isConnected(null).then((response) => {
@@ -14,12 +15,15 @@ function App() {
   });
 
   return (
-    <div class="size1280">
+    <>
+    <Notifications/>
+    <div class="global-container size1280">
+      <ProgressBar/>
       <Router>
-        <ProgressBar/>
         <Organization/>
       </Router>
     </div>
+    </>
   );
 }
 

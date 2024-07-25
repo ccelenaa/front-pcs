@@ -12,9 +12,12 @@ export default function Biens(props) {
   const {id} = useParams();
 
   const [bien, setbien] = React.useState(null);
-
-  React.useEffect(async () => {
+  const setB = async () => {
     setbien(await bienService.get(id));
+  }
+
+  React.useEffect(() => {
+    setB()
   }, []);
 
   const validation = (event) => {

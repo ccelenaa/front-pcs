@@ -10,8 +10,12 @@ export default function Services(props) {
   const [anglet, setAnglet] = React.useState(1);
   const [services, setServices] = React.useState([]);
 
-  React.useEffect(async () => {
+  const init = async () => {
     setServices(await serviceService.getVoyageurServices(props.account.id));
+  }
+
+  React.useEffect(() => {
+    init()
   },[]);
 
   function apply_level(id_service, level) {

@@ -10,9 +10,12 @@ export default function Bailleur(props) {
   const {id} = useParams();
 
   const [bailleur, setBailleur] = React.useState(null);
-
-  React.useEffect(async () => {
+  const setB = async () => {
     setBailleur(await bailleurService.get(id));
+  };
+
+  React.useEffect(() => {
+    setB();
   }, []);
 
   const validation = (event) => {

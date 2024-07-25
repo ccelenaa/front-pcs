@@ -10,8 +10,12 @@ export default function Prestataires(props) {
 
   const [prestataires, setPrestataires] = React.useState([]);
 
-  React.useEffect(async () => {
+  const init = async () => {
     setPrestataires(await prestataireService.gets());
+  }
+
+  React.useEffect(() => {
+    init()
   },[]);
 
   return (<>
